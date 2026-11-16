@@ -3,23 +3,24 @@
     {
       "question": {
         "en": "A free Sunday morning. What do you do first?",
+        "th": "เช้าวันอาทิตย์ที่ว่างทั้งวัน ทำอะไรเป็นอย่างแรก?",
         "ja": "予定のない日曜の朝。まずなにする？"
       },
       "answers": [
         {
-          "text": { "en": "Make a big, slow breakfast", "ja": "ゆっくり朝ごはんを作る" },
+          "text": { "en": "Make a big, slow breakfast", "th": "ทำอาหารเช้าจัดเต็ม กินแบบชิลๆ", "ja": "ゆっくり朝ごはんを作る" },
           "points": { "food": 2, "daily": 1 }
         },
         {
-          "text": { "en": "Put on my favourite song", "ja": "お気に入りの曲をかける" },
+          "text": { "en": "Put on my favourite song", "th": "เปิดเพลงโปรด", "ja": "お気に入りの曲をかける" },
           "points": { "music": 2 }
         },
         {
-          "text": { "en": "Pick today's outfit", "ja": "今日のコーデをえらぶ" },
+          "text": { "en": "Pick today's outfit", "th": "เลือกชุดของวันนี้", "ja": "今日のコーデをえらぶ" },
           "points": { "outfit": 2 }
         },
         {
-          "text": { "en": "Go back to sleep in a sunny spot", "ja": "ひなたで二度寝する" },
+          "text": { "en": "Go back to sleep in a sunny spot", "th": "นอนต่อตรงมุมที่แดดส่อง", "ja": "ひなたで二度寝する" },
           "points": { "daily": 2, "other": 1 }
         }
       ]
@@ -27,23 +28,24 @@
     {
       "question": {
         "en": "A cardboard box appears! You…",
+        "th": "มีกล่องกระดาษโผล่มา! จะทำอะไรดี?",
         "ja": "目の前にダンボール箱が！どうする？"
       },
       "answers": [
         {
-          "text": { "en": "Sit in it. Obviously.", "ja": "とりあえず入る。" },
+          "text": { "en": "Sit in it. Obviously.", "th": "เข้าไปนั่งสิ ถามได้", "ja": "とりあえず入る。" },
           "points": { "other": 2, "daily": 1 }
         },
         {
-          "text": { "en": "Turn it into a costume", "ja": "かぶって仮装する" },
+          "text": { "en": "Turn it into a costume", "th": "เอามาทำเป็นชุดแฟนซี", "ja": "かぶって仮装する" },
           "points": { "outfit": 2, "seasonal": 1 }
         },
         {
-          "text": { "en": "Hide inside, then jump out. Boo!", "ja": "中にかくれて…ばあっ！" },
+          "text": { "en": "Hide inside, then jump out. Boo!", "th": "ซ่อนในกล่อง แล้วโผล่ออกมา แฮ่!", "ja": "中にかくれて…ばあっ！" },
           "points": { "spooky": 2 }
         },
         {
-          "text": { "en": "Drum on it like a pro", "ja": "ドラムみたいにたたく" },
+          "text": { "en": "Drum on it like a pro", "th": "ตีกล่องเป็นกลองแบบมือโปร", "ja": "ドラムみたいにたたく" },
           "points": { "music": 2 }
         }
       ]
@@ -51,23 +53,24 @@
     {
       "question": {
         "en": "Pick a snack.",
+        "th": "เลือกของว่างหนึ่งอย่าง",
         "ja": "おやつ、どれにする？"
       },
       "answers": [
         {
-          "text": { "en": "Something warm, with a little spice", "ja": "あったかくて、ちょっと辛いもの" },
+          "text": { "en": "Something warm, with a little spice", "th": "อะไรอุ่นๆ เผ็ดนิดๆ", "ja": "あったかくて、ちょっと辛いもの" },
           "points": { "food": 2 }
         },
         {
-          "text": { "en": "Something sweet to share with someone", "ja": "だれかと分けっこできる甘いもの" },
+          "text": { "en": "Something sweet to share with someone", "th": "ของหวานไว้แบ่งกับใครสักคน", "ja": "だれかと分けっこできる甘いもの" },
           "points": { "love": 2, "food": 1 }
         },
         {
-          "text": { "en": "The seasonal limited-edition one", "ja": "季節限定のやつ" },
+          "text": { "en": "The seasonal limited-edition one", "th": "รสลิมิเต็ดตามฤดูกาล", "ja": "季節限定のやつ" },
           "points": { "seasonal": 2, "food": 1 }
         },
         {
-          "text": { "en": "The mysterious thing at the back of the fridge", "ja": "冷蔵庫のおくの、なぞの何か" },
+          "text": { "en": "The mysterious thing at the back of the fridge", "th": "ของลึกลับก้นตู้เย็น", "ja": "冷蔵庫のおくの、なぞの何か" },
           "points": { "spooky": 2, "other": 1 }
         }
       ]
@@ -75,23 +78,24 @@
     {
       "question": {
         "en": "Your favourite kind of day?",
+        "th": "ชอบวันแบบไหนที่สุด?",
         "ja": "いちばん好きな日は？"
       },
       "answers": [
         {
-          "text": { "en": "Cherry blossoms and festivals", "ja": "お花見やおまつりの日" },
+          "text": { "en": "Cherry blossoms and festivals", "th": "วันชมดอกไม้กับงานเทศกาล", "ja": "お花見やおまつりの日" },
           "points": { "seasonal": 2 }
         },
         {
-          "text": { "en": "Halloween night", "ja": "ハロウィンの夜" },
+          "text": { "en": "Halloween night", "th": "คืนฮาโลวีน", "ja": "ハロウィンの夜" },
           "points": { "spooky": 2, "seasonal": 1 }
         },
         {
-          "text": { "en": "A day with no plans at all", "ja": "なんにも予定がない日" },
+          "text": { "en": "A day with no plans at all", "th": "วันที่ไม่มีแพลนอะไรเลย", "ja": "なんにも予定がない日" },
           "points": { "daily": 2 }
         },
         {
-          "text": { "en": "Any day with my favourite person", "ja": "大好きな人といっしょの日" },
+          "text": { "en": "Any day with my favourite person", "th": "วันไหนก็ได้ ที่ได้อยู่กับคนที่รัก", "ja": "大好きな人といっしょの日" },
           "points": { "love": 2 }
         }
       ]
@@ -99,23 +103,24 @@
     {
       "question": {
         "en": "How do you say “I like you”?",
+        "th": "จะบอกว่า “ชอบนะ” ยังไงดี?",
         "ja": "「すき」って、どう伝える？"
       },
       "answers": [
         {
-          "text": { "en": "A slow, sleepy blink", "ja": "ゆっくり、まばたきする" },
+          "text": { "en": "A slow, sleepy blink", "th": "กะพริบตาช้าๆ แบบง่วงๆ", "ja": "ゆっくり、まばたきする" },
           "points": { "love": 2, "other": 1 }
         },
         {
-          "text": { "en": "Sing them a song", "ja": "歌にして伝える" },
+          "text": { "en": "Sing them a song", "th": "ร้องเพลงให้ฟัง", "ja": "歌にして伝える" },
           "points": { "music": 2 }
         },
         {
-          "text": { "en": "Knock their cup off the table", "ja": "コップをテーブルから落とす" },
+          "text": { "en": "Knock their cup off the table", "th": "ปัดแก้วของอีกฝ่ายตกโต๊ะ", "ja": "コップをテーブルから落とす" },
           "points": { "other": 2 }
         },
         {
-          "text": { "en": "Dress up and bring flowers", "ja": "おしゃれして花束をわたす" },
+          "text": { "en": "Dress up and bring flowers", "th": "แต่งตัวจัดเต็ม แล้วถือดอกไม้ไปให้", "ja": "おしゃれして花束をわたす" },
           "points": { "outfit": 2, "love": 1 }
         }
       ]

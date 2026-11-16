@@ -1,7 +1,7 @@
-# Ding Ding Website
+# DING DING Website
 
-A small, cute website for **Ding Ding**, a black-and-white cat character drawn by Ing.
-Ding Ding has **no gender**: never use he/she/his/her (anywhere on the site, including `dingding.json`).
+A small, cute website for **DING DING**, a black-and-white cat character drawn by Ing.
+DING DING has **no gender**: never use he/she/his/her (anywhere on the site, including `dingding.json`).
 Every artwork is a **half-body** cat peeking up from the bottom edge of a square frame.
 
 ## Folders
@@ -13,8 +13,8 @@ ding_ding_project/
 ├── font/          # local font files (reference only, not used on the web)
 ├── design-ref/    # screenshots of websites Ing likes — look at these before designing
 ├── data/          # JSON (dingding.json, quiz.json)
-├── thumbs/        # GENERATED small WebP copies of the artwork and logos (400 / 800 / 900px)
-├── video/         # GENERATED MP4 + WebM animations (900px), made from the GIFs
+├── thumbs/        # GENERATED small WebP copies of the artwork, logos and reward art (400 / 800 / 900px)
+├── video/         # GENERATED MP4 + WebM animations (900px), made from the GIFs (and logos/winner.gif)
 ├── tools/         # scripts that build thumbs/ and video/ (make_thumbs.py, make_videos.py)
 └── site files     # index.html, css/, js/
 ```
@@ -38,14 +38,19 @@ ding_ding_project/
 
 ## Languages
 
-- English and Japanese only, with an EN / JA toggle. No Thai.
-- Remember the chosen language in `localStorage`.
-- Japanese should sound natural and cute, not a literal translation.
+- English, Thai and Japanese. The toggle shows **EN / TH / JP**.
+- Language codes in the code are the standard ones: `en`, `th`, `ja` (`data-lang`, `<html lang>`, the keys in `i18n.js` and the JSON, the saved setting). Only the button label says "JP".
+- First visit: follow the browser's main language (`th…` → Thai, `ja…` → Japanese, anything else → English). After that, remember the chosen language in `localStorage`.
+- The name: **DING DING** (all caps) in English, ดิงดิง in Thai, ディンディン in Japanese. The link group titles and the footer stay in English in every language.
+- Thai and Japanese should sound natural, playful and cute, not like a literal translation. In Thai, never use gendered particles or pronouns for DING DING (no ครับ/ค่ะ, no เขา/เธอ for DING DING).
+- Every text needs all three languages: UI text in `js/i18n.js`, names and descriptions in `data/dingding.json`, questions and answers in `data/quiz.json`.
+- Thai line breaking: Thai has no spaces between words, and the browser's dictionary does not know some words (our name, loanwords like ทาโกะยากิ), so it can cut them in half. Words in `THAI_KEEP` in `js/i18n.js` are kept together automatically (invisible word joiners are added when the text loads; the JSON stays plain). If a Thai word breaks badly, add it there. Thai paragraphs use `text-wrap: balance`, so no short word is left alone on a line.
 
 ## Fonts (Google Fonts, SIL OFL 1.1)
 
-- **Yusei Magic** for headings, buttons, and labels.
-- **Yomogi** for body text.
+- **Yusei Magic** for headings, buttons, and labels (English and Japanese).
+- **Yomogi** for body text (English and Japanese).
+- **Mali** for all Thai text, headings (weight 600) and body (400). It is only downloaded when Thai is shown (`js/i18n.js` adds the stylesheet link), and the quiz story card uses it too.
 - Use images from `logos/` for the main logo and headings when available.
 
 ## Design
@@ -68,26 +73,43 @@ One entry per character:
 ```json
 {
   "id": "04",
-  "name": { "en": "", "ja": "" },
-  "description": { "en": "", "ja": "" },
-  "category": ""
+  "name": { "en": "", "th": "", "ja": "" },
+  "description": { "en": "", "th": "", "ja": "" },
+  "category": "",
+  "rarity": ""
 }
 ```
 
-- `category`: one of the approved categories: `food`, `music`, `outfit`, `seasonal`, `spooky`, `love`, `daily`, `other`.
+- `category`: one of the approved categories: `food`, `music`, `outfit`, `seasonal`, `spooky`, `love`, `daily`, `other` (plus `secret`, only for the Secret).
+- `rarity`: the gacha tier, set mostly by category. The badge is shown on unlocked tiles, in the popup and in the gacha reveal:
+  - `common` (no badge): food, daily, outfit, other, love
+  - `rare` (badge "R"): music and seasonal, except the 4 Legend pieces
+  - `super-rare` (badge "SR"): spooky, plus the 4 Legend pieces `067`, `068`, `069`, `070`
+  - `secret` (badge "SECRET"): only the Secret
 - Thumbnail and video paths are derived from the `id` in code (`thumbs/<id>-400.webp`, `video/<id>.mp4`), so they are not stored in the JSON.
+- **The Secret** is the last entry: id `000`, "Just DING DING", category and rarity `secret`. It is the plain blinking DING DING from Home, so it has one extra field, `"media": "ding-normal"`, and uses `thumbs/ding-normal.webp` and `video/ding-normal.mp4/.webm` instead of files named after its id. It has no silhouette.
 - All pieces are drawn by Ing. There are no collaborations and no `credit` field.
 
 ## Pages
 
-1. **Home**: big logo and tagline, then the blinking Ding Ding (`logos/ding_normal.gif`, just the cat on white) peeking up from behind a thin line (the "counter edge"), with three text links underneath to Collection / Gacha / Quiz. The logo and the cat are the hero; the links are secondary and show small grey hints (collected count, "Try your luck!", "Which one are you?"). No boxes.
-2. **Collection**: grid of all characters, filter by category, animation on hover (desktop) or in the popup (mobile tap), detail popup (not a separate page). Shows collection progress, e.g. "12 / 65 collected".
-3. **Gacha**: spin a capsule machine, the capsule opens and reveals a Ding Ding.
+1. **Home**: big logo and tagline, then the blinking DING DING (`logos/ding_normal.gif`, just the cat on white) peeking up from behind a thin line (the "counter edge"), with three text links underneath to Collection / Gacha / Quiz. The logo and the cat are the hero; the links are secondary and show small grey hints (collected count, "Try your luck!", "Which one are you?"). No boxes.
+2. **Collection**: grid of all characters, filter by category, animation on hover (desktop) or in the popup (mobile tap), detail popup (not a separate page). Shows collection progress.
+   - Unlocked tiles, the popup and the gacha reveal show a rarity sticker badge (R / SR / SECRET, none for Common) in the top-right corner, in Yusei Magic, slightly tilted: R white, SR eye yellow (both with a thick black outline), SECRET black with shimmering gold letters.
+   - The Secret never appears (no tile, no silhouette, not counted) until it is found. Progress reads "12 / 67 + ???" before, and "13 / 68" after. The "Secret" filter chip is only added once it is found.
+   - Once found, the Secret is not in the grid: it sits alone at the very bottom of the Collection, below the grid, on plain white with lots of space (`#secret-spot`). It shows with the "All" and "Secret" filters.
+3. **Gacha**: spin a capsule machine, the capsule opens and reveals a DING DING.
    - **No daily limit**, and repeats are allowed. A repeat shows "Hello again!" instead of "NEW!".
-   - Picking is random: a Ding Ding not collected yet is twice as likely as one already collected. There is no rarity.
+   - Each spin first picks a tier, then a piece in that tier: Common 65%, Rare 20%, Super Rare 13%, Secret 2% (`ODDS` in `js/gacha.js`). Inside the tier, a DING DING not collected yet is 10× as likely as one already collected (`NEW_WEIGHT`), so repeats still happen, just less often.
+   - Target: a full collection in about 100–150 spins. Simulated (2,000 full collections): average about 115 spins, 90% finish within about 145. Re-check this if the odds or the number of pieces change.
+   - Reveal effects: Common is plain; Rare has sparkles; Super Rare has sparkles, a gold glow, and the capsule shakes hard before it opens; the Secret shakes hard too, then the screen goes dark and two yellow eyes blink before the reveal, with a black "SECRET!" / 「シークレット！」 / "ตัวลับ!" badge. The capsule colour hints at the tier.
    - Unlocked characters appear in colour in the Collection; locked ones show as a dark silhouette.
-4. **Quiz**: "Which Ding Ding are you?" About 5 questions, the result is one character, with a button to save the result as a PNG card.
-5. **About**: big handwritten "Hello!" / "こんにちは！", short centred text about Ding Ding and the artist, two small groups of text links (Ding Ding: Instagram, Facebook; Ing: Instagram, Facebook, Linktree) opening in a new tab, and Ding Ding peeking up from the footer line. No X/Twitter links anywhere.
+4. **Reward for collecting everything** (`js/reward.js`): when the last of the 68 (including the Secret) is unlocked, after its normal reveal:
+   - A full-screen celebration: confetti, the winner animation (`logos/winner.gif` → `video/winner.*`, still `thumbs/winner-*.webp` from `logos/winner.png`) in a card in the middle, all 68 DING DINGs popping in around it, and "COMPLETE!" / 「コンプリート！」 / "ครบแล้ว!". The winner art is a reward only, never a collectible, so it is not in `dingding.json`.
+   - The completion date is saved once, when it happens (`dd.completed`, "YYYY-MM-DD"). It is shown in the player's language (Thai uses the Buddhist year).
+   - A certificate, a 1080×1920 Instagram Story PNG with the same safe area as the quiz card: the winner picture, "DING DING MASTER" / 「ディンディンマスター」 / "นักสะสมดิงดิง", the player's name (typed in the certificate popup, remembered in `dd.player`), the completion date, a 17×4 grid of all 68 pieces, and "© DING DING THE CAT by INGINGE DESIGN". It uses the same save/share button as the quiz (`js/share.js`).
+   - After completion, the Collection shows a COMPLETE! badge next to the progress and a "Certificate" button to open it again anytime.
+5. **Quiz**: "Which DING DING are you?" About 5 questions, the result is one character (never the Secret), with a button to save the result as a PNG card.
+6. **About**: big handwritten "Hello!" / "こんにちは！", short centred text about DING DING and the artist, two small groups of text links ("DING DING THE CAT": Instagram, Facebook; "INGINGE DESIGN": Instagram, Facebook, Linktree) opening in a new tab, and DING DING peeking up from the footer line. No X/Twitter links anywhere. Footer (all languages): "© DING DING THE CAT by INGINGE DESIGN".
 
 ## Workflow
 

@@ -48,10 +48,10 @@ function showPage() {
 // Home: the small hints under the entrances.
 function renderHomeHints() {
   if (!DATA.length) return;
-  var have = Collection.unlockedIds();
-  var n = DATA.filter(function (it) { return have.indexOf(it.id) !== -1; }).length;
+  // the Secret is only counted once it is found (67 → 68)
+  var t = Collection.totals();
   document.getElementById('home-hint-collection').textContent =
-    I18n.t('home.hintCollection', { n: n, total: DATA.length });
+    I18n.t('home.hintCollection', { n: t.n, total: t.total });
 }
 
 function rerenderText() {
@@ -81,14 +81,16 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('data/dingding.json')
     .then(function (res) { return res.json(); })
     .then(function (items) {
-      DATA = items;
+      DATA = I18n.glueThai(items);
       Collection.init(items);
       Gacha.init(items);
+      Reward.init(items);
+      Collection.render();
       renderHomeHints();
       // The quiz questions are a separate file; the rest of the site works without it.
       return fetch('data/quiz.json')
         .then(function (res) { return res.json(); })
-        .then(function (quiz) { Quiz.init(items, quiz); });
+        .then(function (quiz) { Quiz.init(items, I18n.glueThai(quiz)); });
     })
     .catch(function (err) {
       console.error('Could not load the data files', err);

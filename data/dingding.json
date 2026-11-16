@@ -3,804 +3,1021 @@
     "id": "04",
     "name": {
       "en": "Lucky Paw",
+      "th": "แมวกวักนำโชค",
       "ja": "おまねきディン"
     },
     "description": {
       "en": "Waving one paw to invite good luck your way.",
+      "th": "กวักอุ้งเท้าเรียกโชคดี ให้วิ่งมาหาเลย",
       "ja": "おいでおいで〜って、しあわせを招いてるよ。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "06",
     "name": {
       "en": "Little Sprout",
+      "th": "ต้นอ่อนจิ๋ว",
       "ja": "ふたばちゃん"
     },
     "description": {
-      "en": "A tiny sprout popped up on Ding Ding's head overnight.",
+      "en": "A tiny sprout popped up on DING DING's head overnight.",
+      "th": "ตื่นเช้ามา มีต้นอ่อนเล็กๆ งอกขึ้นบนหัวดิงดิงซะแล้ว",
       "ja": "ある朝、頭にちいさな芽がぴょこっと生えてきたよ。"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "07",
     "name": {
       "en": "Cowboy",
+      "th": "คาวบอย",
       "ja": "カウボーイ"
     },
     "description": {
       "en": "A wild-west wanderer with a big hat and a red bandana.",
+      "th": "นักเดินทางแห่งแดนตะวันตก หมวกใบโต กับผ้าพันคอสีแดง",
       "ja": "大きな帽子に赤いバンダナ、さすらいのカウボーイ。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "09",
     "name": {
       "en": "Bandana Bow",
+      "th": "โบว์บันดาน่า",
       "ja": "バンダナリボン"
     },
     "description": {
       "en": "A red bandana tied into a perfect bow.",
+      "th": "ผ้าบันดาน่าสีแดง ผูกเป็นโบว์สวยเป๊ะ",
       "ja": "赤いバンダナをきゅっとリボン結び。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "010",
     "name": {
       "en": "Tom Yum",
+      "th": "ต้มยำกุ้ง",
       "ja": "トムヤムクン"
     },
     "description": {
       "en": "Balancing a bowl of tom yum, already sweating from the spice.",
+      "th": "ประคองชามต้มยำร้อนๆ ยังไม่ทันกิน เหงื่อก็แตกเพราะความเผ็ดซะแล้ว",
       "ja": "トムヤムクンを頭にのせて、辛さでちょっと汗かいてる。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "011",
     "name": {
       "en": "Late-Night Noodles",
+      "th": "บะหมี่มื้อดึก",
       "ja": "夜食ラーメン"
     },
     "description": {
       "en": "Slurping hot noodles straight from the pot.",
+      "th": "ซู้ดเส้นร้อนๆ ตรงจากหม้อเลย",
       "ja": "お鍋から直接ずるずる…夜食はやめられない。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "012",
     "name": {
       "en": "Cozy Beanie",
+      "th": "หมวกไหมพรม",
       "ja": "ニット帽"
     },
     "description": {
       "en": "Bundled up in a knit beanie with fluffy braids.",
+      "th": "ใส่หมวกไหมพรมอุ่นๆ กับผมเปียฟูฟ่อง",
       "ja": "ニット帽にもこもこ三つ編み、ぬくぬくスタイル。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "013",
     "name": {
-      "en": "Hello, Ding Ding!",
+      "en": "Hello, DING DING!",
+      "th": "สวัสดี ดิงดิง!",
       "ja": "ディンディンです"
     },
     "description": {
       "en": "Peeking out from behind a big \"DING DING\" sign.",
+      "th": "โผล่หน้ามาจากหลังป้าย “DING DING” อันเบ้อเริ่ม",
       "ja": "「DING DING」の看板からひょっこりごあいさつ。"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "014",
     "name": {
       "en": "Sunny-Side Up",
+      "th": "ไข่ดาว",
       "ja": "目玉焼き"
     },
     "description": {
       "en": "Wearing a fried egg like a fancy hat, with a wink.",
+      "th": "สวมไข่ดาวเป็นหมวกสุดเก๋ แถมขยิบตาให้อีกต่างหาก",
       "ja": "目玉焼きをぼうしにして、ぱちっとウインク。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "016",
     "name": {
       "en": "Little Clown",
+      "th": "ตัวตลกจิ๋ว",
       "ja": "ピエロ"
     },
     "description": {
       "en": "A tiny top hat, a red nose, and a frilly collar.",
+      "th": "หมวกทรงสูงใบจิ๋ว จมูกแดง และปกคอระบายฟูๆ",
       "ja": "ちいさなシルクハットに赤いおはな、ピエロさん。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "017",
     "name": {
       "en": "Bubble Gum",
+      "th": "หมากฝรั่ง",
       "ja": "ふうせんガム"
     },
     "description": {
       "en": "Blowing the biggest bubble-gum bubble ever.",
+      "th": "เป่าลูกโป่งหมากฝรั่งลูกใหญ่ที่สุดในโลก",
       "ja": "ふうせんガム、どこまでふくらむかな？"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "018",
     "name": {
       "en": "Listen, Darling",
+      "th": "ฟังนะ ที่รัก",
       "ja": "よーく聞いてね"
     },
     "description": {
       "en": "One finger up, head tilted. Now listen carefully, darling.",
+      "th": "ชูนิ้วขึ้นหนึ่งนิ้ว เอียงคอนิดๆ… ตั้งใจฟังดีๆ นะ ที่รัก",
       "ja": "人さし指をピッ。いい？よーく聞いてね。"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "019",
     "name": {
       "en": "Rose Charmer",
+      "th": "กุหลาบมัดใจ",
       "ja": "バラをどうぞ"
     },
     "description": {
       "en": "A rose between the teeth and sparkles all around.",
+      "th": "คาบกุหลาบไว้ในปาก แสงวิบวับเต็มไปหมด",
       "ja": "バラをくわえて、キラキラ〜っとキメ顔。"
     },
-    "category": "love"
+    "category": "love",
+    "rarity": "common"
   },
   {
     "id": "020",
     "name": {
       "en": "Sleepy Hood",
+      "th": "ฮู้ดง่วงนอน",
       "ja": "おねむフード"
     },
     "description": {
       "en": "Snuggled up in a soft blue hood, almost asleep.",
+      "th": "ซุกตัวในฮู้ดสีฟ้านุ่มนิ่ม เกือบจะหลับแล้ว",
       "ja": "ふわふわの青いフードにくるまって、もうおねむ。"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "021",
     "name": {
       "en": "Movie Night",
+      "th": "ดูหนังที่บ้าน",
       "ja": "おうち映画"
     },
     "description": {
       "en": "Popcorn in paw, eyes glued to the big screen.",
+      "th": "ป๊อปคอร์นในอุ้งเท้า ตาจ้องจอไม่กะพริบ",
       "ja": "ポップコーンかかえて、スクリーンにくぎづけ。"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "022",
     "name": {
       "en": "Spooky Story",
+      "th": "เรื่องเล่าสยองขวัญ",
       "ja": "こわい話"
     },
     "description": {
       "en": "Shining a flashlight under the chin for a scary story.",
+      "th": "ส่องไฟฉายใต้คาง เตรียมเล่าเรื่องผี",
       "ja": "懐中電灯であごの下を照らして…こわい話、はじめるよ。"
     },
-    "category": "spooky"
+    "category": "spooky",
+    "rarity": "super-rare"
   },
   {
     "id": "024",
     "name": {
       "en": "Orange Mask",
+      "th": "หน้ากากสีส้ม",
       "ja": "オレンジマスク"
     },
     "description": {
       "en": "A mysterious orange mask with a gold chain.",
+      "th": "หน้ากากสีส้มสุดลึกลับ ห้อยสร้อยทองเส้นงาม",
       "ja": "金のチェーンに、なぞのオレンジマスク。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "026",
     "name": {
       "en": "Little Magician",
+      "th": "นักมายากลจิ๋ว",
       "ja": "てじなディン"
     },
     "description": {
       "en": "Top hat, bow tie, and a trick up the sleeve. Ta-da!",
+      "th": "หมวกทรงสูง หูกระต่าย และกลลับซ่อนในแขนเสื้อ ทาด๊า!",
       "ja": "シルクハットから何が出るかな？ジャジャーン！"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "027",
     "name": {
       "en": "Hula",
+      "th": "ฮูลา",
       "ja": "フラダンス"
     },
     "description": {
       "en": "Swaying to island music with a flower behind one ear.",
+      "th": "โยกตัวตามเพลงริมทะเล ทัดดอกไม้ไว้ข้างหู",
       "ja": "お花を耳にかざって、ゆらゆらフラダンス。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "rare"
   },
   {
     "id": "028",
     "name": {
       "en": "Polka-Dot Hood",
+      "th": "ฮู้ดลายจุด",
       "ja": "水玉ずきん"
     },
     "description": {
       "en": "A red polka-dot hood tied with a little bow.",
+      "th": "ฮู้ดลายจุดสีแดง ผูกโบว์เล็กๆ น่ารักๆ",
       "ja": "赤い水玉ずきんを、ちょこんとリボン結び。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "029",
     "name": {
       "en": "Gym Day",
+      "th": "วันเข้ายิม",
       "ja": "筋トレ"
     },
     "description": {
       "en": "Headband on, dumbbells up, no excuses today.",
+      "th": "คาดผ้า ยกดัมเบล วันนี้ห้ามมีข้ออ้าง!",
       "ja": "ヘアバンドしめて、今日もダンベルがんばる！"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "030",
     "name": {
       "en": "Yukata Stroll",
+      "th": "ยูกาตะเดินเล่น",
       "ja": "ゆかたでおさんぽ"
     },
     "description": {
       "en": "A little evening stroll in a favourite yukata.",
+      "th": "ใส่ยูกาตะตัวโปรด ออกไปเดินเล่นยามเย็น",
       "ja": "お気に入りのゆかたで、ゆるっとおさんぽ。"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "031",
     "name": {
       "en": "Ukulele Time",
+      "th": "เวลาอูคูเลเล่",
       "ja": "ウクレレタイム"
     },
     "description": {
       "en": "Strumming a little ukulele and humming along.",
+      "th": "ดีดอูคูเลเล่ตัวจิ๋ว ฮัมเพลงไปด้วย",
       "ja": "ウクレレをポロロン、ふんふん鼻歌。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "rare"
   },
   {
     "id": "032",
     "name": {
       "en": "Drummer",
+      "th": "มือกลอง",
       "ja": "ドラマー"
     },
     "description": {
       "en": "A flat cap and a big drum, ready to keep the beat.",
+      "th": "หมวกแก๊ปกับกลองใบใหญ่ พร้อมคุมจังหวะแล้ว",
       "ja": "ハンチング帽で、どんどこリズムきざむよ。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "rare"
   },
   {
     "id": "033",
     "name": {
       "en": "Acoustic",
+      "th": "อะคูสติก",
       "ja": "アコースティック"
     },
     "description": {
       "en": "A quiet acoustic song just for you.",
+      "th": "เพลงอะคูสติกเบาๆ ร้องให้ฟังคนเดียวเลย",
       "ja": "あなたのためだけに、しずかなアコギの一曲。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "rare"
   },
   {
     "id": "034",
     "name": {
       "en": "Ghost Dancer",
+      "th": "ผีนางรำ",
       "ja": "おばけの踊り子"
     },
     "description": {
       "en": "A Thai dancer ghost. Darkness, then a spotlight… a creepy smile, and the dance begins.",
+      "th": "ผีนางรำไทย… ไฟดับมืด สปอตไลต์ส่องลงมา ยิ้มหลอนๆ แล้วเริ่มร่ายรำ",
       "ja": "タイのおばけの踊り子。まっくら…パッとライト！ニヤリと笑って、ゆら〜り踊りだす。"
     },
-    "category": "spooky"
+    "category": "spooky",
+    "rarity": "super-rare"
   },
   {
     "id": "035",
     "name": {
       "en": "Balloon Artist",
+      "th": "ศิลปินลูกโป่ง",
       "ja": "バルーンアート"
     },
     "description": {
       "en": "Twisting a balloon dog with a big yellow hat on.",
+      "th": "สวมหมวกเหลืองใบโต บิดลูกโป่งเป็นน้องหมา",
       "ja": "黄色い帽子で、バルーンのわんこ作ったよ。"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "036",
     "name": {
       "en": "Mime",
+      "th": "ละครใบ้",
       "ja": "パントマイム"
     },
     "description": {
       "en": "Beret, stripes, and not a single word. Is there an invisible wall?",
+      "th": "หมวกเบเรต์ เสื้อลายขวาง ไม่พูดสักคำ… มีกำแพงล่องหนอยู่ตรงนี้เหรอ?",
       "ja": "ベレー帽にボーダー、おしゃべりはナシ。見えないカベがあるのかな？"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "037",
     "name": {
       "en": "Plate Spinning",
+      "th": "หมุนจาน",
       "ja": "皿回し"
     },
     "description": {
       "en": "Chinese acrobatics! Keep the plates spinning… don't drop them!",
+      "th": "กายกรรมจีน! หมุนจานไว้ให้ดี อย่าให้ตกนะ…",
       "ja": "中国雑技にちょうせん！お皿くるくる…落とさないでね！"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "038",
     "name": {
       "en": "Reindeer",
+      "th": "เรนเดียร์",
       "ja": "トナカイ"
     },
     "description": {
       "en": "Antlers, a red nose, and snowflakes falling.",
+      "th": "เขากวาง จมูกแดง และหิมะโปรยปราย",
       "ja": "ツノに赤いおはな、雪のなかのトナカイさん。"
     },
-    "category": "seasonal"
+    "category": "seasonal",
+    "rarity": "rare"
   },
   {
     "id": "039",
     "name": {
       "en": "Takoyaki Stand",
+      "th": "ร้านทาโกะยากิ",
       "ja": "たこやき屋さん"
     },
     "description": {
       "en": "Running the takoyaki stall, octopus buddy on top.",
+      "th": "เปิดร้านทาโกะยากิ มีเพื่อนปลาหมึกนั่งอยู่บนหัว",
       "ja": "たこやき屋さん開店！頭にはタコの相棒。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "040",
     "name": {
       "en": "Lunar New Year",
+      "th": "ตรุษจีน",
       "ja": "旧正月"
     },
     "description": {
       "en": "Dressed up in red for a lucky new year.",
+      "th": "แต่งชุดแดงรับปีใหม่ ขอให้โชคดีตลอดปี",
       "ja": "赤い服でおめかし、しあわせな新年を。"
     },
-    "category": "seasonal"
+    "category": "seasonal",
+    "rarity": "rare"
   },
   {
     "id": "041",
     "name": {
       "en": "Lovestruck",
+      "th": "ตกหลุมรัก",
       "ja": "ときめき"
     },
     "description": {
       "en": "Floating hearts and a dreamy little smile.",
+      "th": "หัวใจลอยฟ่อง กับรอยยิ้มเคลิ้มๆ",
       "ja": "ハートがふわふわ、ときめきが止まらない。"
     },
-    "category": "love"
+    "category": "love",
+    "rarity": "common"
   },
   {
     "id": "042",
     "name": {
       "en": "Crush",
+      "th": "แอบชอบ",
       "ja": "すきすき"
     },
     "description": {
       "en": "A big bow, long lashes, and hearts in the air.",
+      "th": "โบว์ใหญ่ ขนตางอน หัวใจลอยเต็มไปหมด",
       "ja": "大きなリボンにまつげぱっちり、好きがあふれちゃう。"
     },
-    "category": "love"
+    "category": "love",
+    "rarity": "common"
   },
   {
     "id": "043",
     "name": {
       "en": "Bouquet",
+      "th": "ช่อดอกไม้",
       "ja": "はなたば"
     },
     "description": {
       "en": "Hiding behind a bouquet, about to say something sweet.",
+      "th": "แอบอยู่หลังช่อดอกไม้ ใจเต้นตึกตัก… ต้องมีอะไรจะบอกแน่ๆ",
       "ja": "花束のうしろで、ドキドキ…なにか言いたそう。"
     },
-    "category": "love"
+    "category": "love",
+    "rarity": "common"
   },
   {
     "id": "044",
     "name": {
       "en": "Balloon Party",
+      "th": "ปาร์ตี้ลูกโป่ง",
       "ja": "ふうせんパーティ"
     },
     "description": {
       "en": "Holding three balloons, ready to celebrate.",
+      "th": "ถือลูกโป่งสามลูก พร้อมฉลองแล้ว!",
       "ja": "ふうせん3つもって、さあお祝いしよう！"
     },
-    "category": "seasonal"
+    "category": "seasonal",
+    "rarity": "rare"
   },
   {
     "id": "045",
     "name": {
       "en": "Rocker",
+      "th": "ร็อกเกอร์",
       "ja": "ロックンロール"
     },
     "description": {
       "en": "Shredding on a red electric guitar.",
+      "th": "โซโล่กีตาร์ไฟฟ้าสีแดงแบบจัดเต็ม",
       "ja": "赤いエレキギターで、ギュイーン！"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "rare"
   },
   {
     "id": "046",
     "name": {
       "en": "Hot Spring",
+      "th": "ออนเซ็น",
       "ja": "おんせん"
     },
     "description": {
       "en": "A towel on the head and steam all around. Ahh.",
+      "th": "ผ้าขนหนูบนหัว ไอน้ำลอยรอบตัว… ฟินนน",
       "ja": "頭にタオルのせて、ぽかぽかおんせん。ふぅ〜。"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "047",
     "name": {
       "en": "Tipsy Salaryman",
+      "th": "มนุษย์เงินเดือนกรึ่มๆ",
       "ja": "よっぱらいサラリーマン"
     },
     "description": {
       "en": "After-work drinks went a bit too well. Necktie on the head, of course.",
+      "th": "ปาร์ตี้หลังเลิกงานเพลินไปหน่อย เนกไทเลยขึ้นไปอยู่บนหัว ตามธรรมเนียม",
       "ja": "飲み会でごきげん。ネクタイはもちろん、頭に！ヒック！"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "048",
     "name": {
       "en": "Jiangshi",
+      "th": "ผีจีนกระโดด",
       "ja": "キョンシー"
     },
     "description": {
       "en": "A paper charm on the forehead and stiff little arms.",
+      "th": "แปะยันต์ไว้ที่หน้าผาก แขนเหยียดตรงแข็งทื่อ",
       "ja": "おでこにおふだ、ぴょんぴょんキョンシー。"
     },
-    "category": "spooky"
+    "category": "spooky",
+    "rarity": "super-rare"
   },
   {
     "id": "050",
     "name": {
       "en": "Knitting",
+      "th": "ถักไหมพรม",
       "ja": "あみもの"
     },
     "description": {
       "en": "Knitting something cozy from a ball of yarn.",
+      "th": "ถักของอุ่นๆ จากไหมพรมก้อนกลม",
       "ja": "毛糸玉で、なにかあったかいもの編んでるよ。"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "051",
     "name": {
       "en": "Cherry Blossoms",
+      "th": "ชมซากุระ",
       "ja": "おはなみ"
     },
     "description": {
       "en": "Enjoying dango under the cherry blossoms.",
+      "th": "นั่งกินดังโงะใต้ต้นซากุระบาน",
       "ja": "さくらの下で、おだんごもぐもぐ。"
     },
-    "category": "seasonal"
+    "category": "seasonal",
+    "rarity": "rare"
   },
   {
     "id": "052",
     "name": {
       "en": "Little Chef",
+      "th": "เชฟน้อย",
       "ja": "シェフ"
     },
     "description": {
       "en": "A tall chef's hat and a very serious stir.",
+      "th": "หมวกเชฟทรงสูง กับการคนหม้อแบบจริงจังสุดๆ",
       "ja": "コックさんの帽子で、真剣にまぜまぜ。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "053",
     "name": {
       "en": "Ventriloquist",
+      "th": "นักพูดท้อง",
       "ja": "腹話術"
     },
     "description": {
-      "en": "The little puppet with the cherry bow does all the talking. Ding Ding's lips don't move at all!",
+      "en": "The little puppet with the cherry bow does all the talking. DING DING's lips don't move at all!",
+      "th": "ตุ๊กตาติดโบว์เชอร์รีพูดอยู่ฝ่ายเดียว ปากดิงดิงไม่ขยับเลยสักนิด!",
       "ja": "しゃべっているのは、さくらんぼリボンのお人形。ディンディンの口はぜんぜん動かない…！"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "054",
     "name": {
       "en": "Pumpkin",
+      "th": "ฟักทอง",
       "ja": "かぼちゃ"
     },
     "description": {
       "en": "Peeking out of a big pumpkin costume.",
+      "th": "โผล่หน้าออกมาจากชุดฟักทองลูกโต",
       "ja": "おおきなかぼちゃから、ひょっこりこんばんは。"
     },
-    "category": "seasonal"
+    "category": "seasonal",
+    "rarity": "rare"
   },
   {
     "id": "055",
     "name": {
       "en": "Love Letter",
+      "th": "จดหมายรัก",
       "ja": "ラブレター"
     },
     "description": {
       "en": "Graduation day. Time to finally hand over that love letter. (Find the answer at No. 056!)",
+      "th": "วันจบการศึกษา ถึงเวลายื่นจดหมายรักซะที (ไปดูคำตอบที่ No. 056 นะ!)",
       "ja": "卒業式の日、ずっと書いていたラブレターをわたす。（返事は No.056 で…！）"
     },
-    "category": "love"
+    "category": "love",
+    "rarity": "common"
   },
   {
     "id": "056",
     "name": {
       "en": "Second Button",
+      "th": "กระดุมเม็ดที่สอง",
       "ja": "第二ボタン"
     },
     "description": {
       "en": "The answer: the second button from the uniform, the one closest to the heart. A Japanese graduation tradition.",
+      "th": "คำตอบคือ… กระดุมเม็ดที่สองของเครื่องแบบ เม็ดที่อยู่ใกล้หัวใจที่สุด เป็นธรรมเนียมวันจบการศึกษาของญี่ปุ่น",
       "ja": "返事は、心臓にいちばん近い第二ボタン。照れながら、そっと。"
     },
-    "category": "love"
+    "category": "love",
+    "rarity": "common"
   },
   {
     "id": "057",
     "name": {
       "en": "Samurai",
+      "th": "ซามูไร",
       "ja": "おさむらい"
     },
     "description": {
       "en": "A topknot and a sword, calm and focused.",
+      "th": "มวยผมจุก ดาบคู่กาย นิ่งสงบและแน่วแน่",
       "ja": "ちょんまげに刀、しずかに集中。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "058",
     "name": {
       "en": "Ninja",
+      "th": "นินจา",
       "ja": "にんにん"
     },
     "description": {
       "en": "Secret ninja technique: vanish in a puff of Ethereum smoke!",
+      "th": "วิชานินจาลับ: หายตัวไปในควัน Ethereum ฟุ้บ!",
       "ja": "ひっさつ、イーサリアムの術！ドロン！"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "059",
     "name": {
       "en": "ID Photo",
+      "th": "รูปติดบัตร",
       "ja": "しょうめい写真"
     },
     "description": {
       "en": "Sitting very still for a very official photo.",
+      "th": "นั่งนิ่งสุดๆ เพื่อถ่ายรูปทางการสุดๆ",
       "ja": "うごかないでね…きりっと証明写真、パシャ！"
     },
-    "category": "other"
+    "category": "other",
+    "rarity": "common"
   },
   {
     "id": "060",
     "name": {
       "en": "Monster Hoodie",
+      "th": "ฮู้ดสัตว์ประหลาด",
       "ja": "かいじゅうフード"
     },
     "description": {
       "en": "Being gobbled up by a monster hoodie (it's friendly).",
+      "th": "โดนฮู้ดสัตว์ประหลาดงับหัว (ใจดีนะ ไม่ต้องกลัว)",
       "ja": "かいじゅうフードにぱくっとされてる（なかよし）。"
     },
-    "category": "outfit"
+    "category": "outfit",
+    "rarity": "common"
   },
   {
     "id": "061",
     "name": {
       "en": "Cupcake",
+      "th": "คัพเค้ก",
       "ja": "カップケーキ"
     },
     "description": {
       "en": "Turned into a cupcake, strawberry on top.",
+      "th": "กลายร่างเป็นคัพเค้ก มีสตรอว์เบอร์รีอยู่ข้างบน",
       "ja": "カップケーキになっちゃった、いちごのせて完成。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "062",
     "name": {
       "en": "Soft Serve",
+      "th": "ไอติมซอฟต์เสิร์ฟ",
       "ja": "ソフトクリーム"
     },
     "description": {
       "en": "Wearing a melting soft-serve swirl with sprinkles.",
+      "th": "สวมไอติมซอฟต์เสิร์ฟที่กำลังละลาย โรยเม็ดสีมาด้วย",
       "ja": "とろ〜りソフトクリームをかぶって、ひんやり。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "063",
     "name": {
       "en": "Waffle Sundae",
+      "th": "วาฟเฟิลซันเด",
       "ja": "ワッフルサンデー"
     },
     "description": {
       "en": "Chocolate, ice cream, a cherry, and a big waffle.",
+      "th": "ช็อกโกแลต ไอศกรีม เชอร์รี และวาฟเฟิลชิ้นโต",
       "ja": "チョコにアイスにさくらんぼ、大きなワッフルも。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "064",
     "name": {
       "en": "Mango Cake",
+      "th": "เค้กมะม่วง",
       "ja": "マンゴーケーキ"
     },
     "description": {
       "en": "Topped with sparkly mango cubes. Sweet!",
+      "th": "ท็อปด้วยมะม่วงหั่นเต๋าเงาวับ หวานฉ่ำ!",
       "ja": "キラキラのマンゴーをのせて、あま〜い。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "065",
     "name": {
       "en": "Latte Time",
+      "th": "ลาเต้แก้วโปรด",
       "ja": "カフェラテ"
     },
     "description": {
       "en": "Sipping a warm latte with eyes half closed.",
+      "th": "จิบลาเต้อุ่นๆ ตาปรือๆ",
       "ja": "あったかいラテで、ほっとひといき。"
     },
-    "category": "food"
+    "category": "food",
+    "rarity": "common"
   },
   {
     "id": "066",
     "name": {
       "en": "Children's Day",
+      "th": "วันเด็กญี่ปุ่น",
       "ja": "こどもの日"
     },
     "description": {
       "en": "A paper helmet and carp streamers flying high.",
+      "th": "หมวกเกราะพับจากกระดาษ กับธงปลาคาร์ปพลิ้วไสวบนฟ้า",
       "ja": "かぶとをかぶって、こいのぼりが空にゆらゆら。"
     },
-    "category": "seasonal"
+    "category": "seasonal",
+    "rarity": "rare"
   },
   {
     "id": "067",
     "name": {
       "en": "60s Guitar Legend",
+      "th": "ตำนานกีตาร์ยุค 60",
       "ja": "60年代のギターレジェンド"
     },
     "description": {
       "en": "Big afro, headband, and a guitar that sets the stage on fire. Can you guess who?",
+      "th": "ผมแอฟโฟรฟูๆ คาดผ้าที่หัว กับกีตาร์ที่จุดไฟให้เวทีลุก ทายได้ไหมว่าใคร?",
       "ja": "アフロにヘアバンド、ステージを燃やすギターソロ。だれだかわかる？"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "super-rare"
   },
   {
     "id": "068",
     "name": {
       "en": "The King",
+      "th": "เดอะคิง",
       "ja": "ザ・キング"
     },
     "description": {
       "en": "A shiny pompadour, a sparkly white suit, and a little hip shake. Thank you, thank you very much.",
+      "th": "ผมทรงปอมปาดัวร์เงาวับ สูทขาวระยิบระยับ ส่ายสะโพกนิดๆ แต๊งกิ้ว แต๊งกิ้ว เวรี่มัช",
       "ja": "つやつやリーゼントにキラキラ白スーツ、腰をくいっ。サンキュー、ベリーマッチ。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "super-rare"
   },
   {
     "id": "069",
     "name": {
       "en": "Stadium Champion",
+      "th": "แชมป์กลางสเตเดียม",
       "ja": "スタジアムのチャンピオン"
     },
     "description": {
       "en": "Half a mic stand, one fist in the air, and a voice for the whole stadium.",
+      "th": "ขาตั้งไมค์ครึ่งท่อน กำปั้นชูฟ้า กับเสียงที่ดังก้องทั้งสเตเดียม",
       "ja": "半分のマイクスタンドをかかげて、スタジアムじゅうに届く歌声。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "super-rare"
   },
   {
     "id": "070",
     "name": {
       "en": "Zero Gravity",
+      "th": "ไร้แรงโน้มถ่วง",
       "ja": "ゼログラビティ"
     },
     "description": {
       "en": "A fedora, a sharp white suit, and a lean that defies gravity. Don't try this at home!",
+      "th": "หมวกเฟดอร่า สูทขาวเนี้ยบ กับท่าเอนตัวท้าแรงโน้มถ่วง ห้ามลองที่บ้านนะ!",
       "ja": "ハットに白スーツ、ありえない角度までぐい〜っと前かたむき。まねしないでね！"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "super-rare"
   },
   {
     "id": "071",
     "name": {
       "en": "DJ",
+      "th": "ดีเจ",
       "ja": "DJディン"
     },
     "description": {
       "en": "Headphones on, spinning records all night.",
+      "th": "ใส่หูฟัง เปิดแผ่นยาวทั้งคืน",
       "ja": "ヘッドホンつけて、朝までレコードまわすよ。"
     },
-    "category": "music"
+    "category": "music",
+    "rarity": "rare"
   },
   {
     "id": "072",
     "name": {
       "en": "Kyudo",
+      "th": "ยิงธนูคิวโด",
       "ja": "弓道"
     },
     "description": {
       "en": "Drawing a bow under a clear blue sky.",
+      "th": "น้าวคันธนู ใต้ท้องฟ้าสีครามสดใส",
       "ja": "青空の下で、しずかに弓をひく。"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
   },
   {
     "id": "073",
     "name": {
       "en": "Frankenstein",
+      "th": "แฟรงเกนสไตน์",
       "ja": "フランケン"
     },
     "description": {
       "en": "Bolts in the head, a pumpkin, and a dangling spider.",
+      "th": "น็อตปักหัว ฟักทอง และแมงมุมห้อยต่องแต่ง",
       "ja": "頭にボルト、かぼちゃとクモもいっしょ。"
     },
-    "category": "spooky"
+    "category": "spooky",
+    "rarity": "super-rare"
   },
   {
     "id": "074",
     "name": {
       "en": "Rokurokubi",
+      "th": "ผีคอยาว",
       "ja": "ろくろ首"
     },
     "description": {
       "en": "A quiet figure in a kimono… until the neck starts to stretch. A Japanese yokai!",
+      "th": "คนใส่กิโมโนท่าทางเรียบร้อย… จู่ๆ คอก็ยืดยาวออกมา! โยไคญี่ปุ่นนี่เอง!",
       "ja": "着物すがたの、おしとやかな人…と思ったら、首がにょろ〜ん！"
     },
-    "category": "spooky"
+    "category": "spooky",
+    "rarity": "super-rare"
   },
   {
     "id": "075",
     "name": {
       "en": "Little Witch",
+      "th": "แม่มดน้อย",
       "ja": "まじょ"
     },
     "description": {
       "en": "Stirring a bubbling cauldron in a pointy hat.",
+      "th": "สวมหมวกแหลม คนหม้อยาวิเศษเดือดปุดๆ",
       "ja": "とんがり帽子で、ぐつぐつ魔女のおなべ。"
     },
-    "category": "spooky"
+    "category": "spooky",
+    "rarity": "super-rare"
   },
   {
     "id": "076",
     "name": {
       "en": "Exam Cram",
+      "th": "อ่านหนังสือสอบ",
       "ja": "テスト勉強"
     },
     "description": {
       "en": "Headband on, books piled high. You can do it!",
+      "th": "คาดผ้า หนังสือกองสูงท่วมหัว สู้ๆ นะ!",
       "ja": "はちまきしめて、山もり勉強。ファイト！"
     },
-    "category": "daily"
+    "category": "daily",
+    "rarity": "common"
+  },
+  {
+    "id": "000",
+    "name": {
+      "en": "Just DING DING",
+      "th": "ดิงดิงเฉยๆ",
+      "ja": "ただのディンディン"
+    },
+    "description": {
+      "en": "No costume, no snack, no tricks. Just DING DING, blinking at you.",
+      "th": "ไม่แต่งตัว ไม่กินอะไร ไม่ทำอะไรเลย แค่ดิงดิง กะพริบตาใส่เธอ",
+      "ja": "なにもしてない、ただのディンディン。じーっ…ぱちぱち。"
+    },
+    "category": "secret",
+    "rarity": "secret",
+    "media": "ding-normal"
   }
 ]

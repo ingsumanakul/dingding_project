@@ -12,13 +12,28 @@
   --paper: #ffffff;
   --eye: #f2dc8a;          /* Ding Ding's yellow eyes */
   --blush: #f1c9c4;        /* soft pink from the backgrounds */
+  --gold: #e6bd3f;         /* a deeper eye yellow, for the SECRET badge and sparkles */
 
   --font-head: 'Yusei Magic', system-ui, sans-serif;
   --font-body: 'Yomogi', system-ui, sans-serif;
+  --head-weight: 400;
 
   --gap: 4px;
   --max: 1080px;
 }
+
+/* Thai: Mali for headings and body (loaded by js/i18n.js only when Thai is shown).
+   Thai has no spaces between words; the browser breaks lines at word boundaries,
+   and "balance" evens out the lines, so no short word is left alone on the last line. */
+html[lang="th"] {
+  --font-head: 'Mali', system-ui, sans-serif;
+  --font-body: 'Mali', system-ui, sans-serif;
+  --head-weight: 600;
+}
+html[lang="th"] body { line-height: 1.8; }
+html[lang="th"] p,
+html[lang="th"] h1,
+html[lang="th"] h2 { text-wrap: balance; }
 
 *,
 *::before,
@@ -49,7 +64,7 @@ button { font: inherit; color: inherit; }
   position: relative;
   max-width: var(--max);
   margin: 0 auto;
-  padding: 28px 16px 8px;
+  padding: 42px 16px 8px;   /* room for the language toggle above the logo on phones */
   text-align: center;
 }
 
@@ -63,6 +78,7 @@ button { font: inherit; color: inherit; }
   gap: 4px 18px;
   margin-top: 14px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: lowercase;
@@ -87,6 +103,7 @@ button { font: inherit; color: inherit; }
   align-items: center;
   gap: 2px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 12px;
   color: var(--muted);
 }
@@ -118,7 +135,7 @@ main {
   margin: 0;
   text-align: center;
   font-family: var(--font-head);
-  font-weight: 400;
+  font-weight: var(--head-weight);
   font-size: 34px;
   line-height: 1.3;
   color: var(--ink);
@@ -143,6 +160,7 @@ main {
   background: var(--ink);
   color: #fff;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 14px;
   text-decoration: none;
   transition: transform 0.2s;
@@ -207,6 +225,7 @@ body[data-page="home"] .site-nav { margin-top: 26px; }
   padding: 0 6px;
   border-radius: 6px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 18px;
   line-height: 1.5;
   color: var(--ink);
@@ -234,9 +253,34 @@ body[data-page="home"] .site-nav { margin-top: 26px; }
   text-align: center;
 }
 
-.progress-text {
+.progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin: 0 0 6px;
+}
+
+/* COMPLETE! next to the progress, after collecting everything (js/reward.js) */
+.complete-badge {
+  padding: 1px 10px 2px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--eye);
+  font-family: 'Yusei Magic', system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--ink);
+  transform: rotate(-4deg);
+}
+html[lang="th"] .complete-badge { font-family: var(--font-head); font-weight: var(--head-weight); }
+
+#open-cert { margin-top: 14px; }
+.pill-small { padding: 5px 16px; font-size: 13px; }
+
+.progress-text {
+  margin: 0;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 14px;
   color: var(--ink);
 }
@@ -273,6 +317,7 @@ body[data-page="home"] .site-nav { margin-top: 26px; }
   border-radius: 999px;
   background: var(--paper);
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 13px;
   color: var(--text);
   cursor: pointer;
@@ -336,6 +381,27 @@ video.motion {
 }
 .tile button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
+/* The Secret: the plain cat on white, sitting on the bottom edge (not cropped) */
+.tile.is-secret { background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.tile.is-secret img,
+.tile.is-secret video,
+.detail.is-secret .detail-image img,
+.detail.is-secret .detail-image video,
+.gacha-reveal[data-rarity="secret"] .reveal-image img,
+.gacha-reveal[data-rarity="secret"] .reveal-image video {
+  object-fit: contain;
+  object-position: center bottom;
+  background: #fff;
+}
+.detail.is-secret .detail-image { background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+
+/* The Secret's own spot below the grid: just the cat on plain white, lots of space */
+.secret-spot {
+  width: min(240px, 64vw);
+  margin: 88px auto 0;
+}
+.secret-spot .tile { background: #fff; box-shadow: none; }
+
 /* ---------- Gacha ---------- */
 
 .page-gacha { text-align: center; }
@@ -394,7 +460,32 @@ video.motion {
 .capsule-top    { top: 0;    background: var(--eye); border-radius: 32px 32px 0 0; border-bottom-width: 2px; }
 .capsule-bottom { bottom: 0; background: #fff;       border-radius: 0 0 32px 32px; border-top-width: 2px; }
 
+/* the capsule colour hints at the tier */
+.capsule[data-rarity="rare"] .capsule-top       { background: var(--blush); }
+.capsule[data-rarity="super-rare"] .capsule-top { background: var(--gold); }
+.capsule[data-rarity="secret"] .capsule-top     { background: var(--ink); }
+
 .capsule.is-dropping { animation: capsule-drop 0.9s cubic-bezier(0.3, 0, 0.6, 1); }
+/* Super Rare and Secret: a long, hard shake with a glow before it opens */
+.capsule.is-shaking-hard { animation: capsule-shake-hard 0.2s ease-in-out 8; }
+.capsule.is-shaking-hard::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: var(--eye);
+  filter: blur(14px);
+  animation: glow-pulse 0.8s ease-in-out infinite;
+}
+@keyframes capsule-shake-hard {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-20deg) translateY(-4px); }
+  75% { transform: rotate(20deg) translateY(-4px); }
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.9); }
+  50% { opacity: 0.9; transform: scale(1.15); }
+}
 .capsule.is-shaking  { animation: capsule-shake 0.35s ease-in-out 2; }
 .capsule.is-open .capsule-top    { animation: open-top 0.45s ease-out forwards; }
 .capsule.is-open .capsule-bottom { animation: open-bottom 0.45s ease-out forwards; }
@@ -431,6 +522,7 @@ video.motion {
   padding: 1px 14px;
   border-radius: 999px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 12px;
   letter-spacing: 0.08em;
   color: var(--muted);
@@ -438,14 +530,105 @@ video.motion {
 
 .reveal-badge.is-new { background: var(--eye); color: var(--ink); }
 
-.reveal-image {
+/* the box the sparkles are placed around */
+.reveal-stage {
   position: relative;
   width: min(360px, 82vw);
-  aspect-ratio: 1;
   margin: 28px auto 24px;
+}
+
+.reveal-image {
+  position: relative;
+  aspect-ratio: 1;
   border-radius: 8px;
   overflow: hidden;
   background: var(--tile);
+}
+
+/* ---- reveal effects per tier (data-rarity is set by js/gacha.js) ----
+   common: nothing extra · rare: sparkles · super-rare: sparkles + gold glow
+   secret: dark screen with blinking eyes first, then sparkles + glow + black badge */
+
+/* a four-pointed sparkle */
+.spark {
+  display: none;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: var(--gold);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: twinkle 1.6s ease-in-out infinite;
+}
+.gacha-reveal:not([data-rarity="common"]) .spark { display: block; }
+.spark.s1 { top: -14px;  left: -10px; }
+.spark.s2 { top: 16%;    right: -16px; width: 20px; height: 20px; animation-delay: 0.5s; }
+.spark.s3 { bottom: 20%; left: -18px;  width: 18px; height: 18px; animation-delay: 0.9s; }
+.spark.s4 { bottom: -12px; right: -8px; animation-delay: 0.3s; }
+.spark.s5 { top: -18px;  right: 22%;   width: 14px; height: 14px; animation-delay: 1.1s; }
+.spark.s6 { bottom: -16px; left: 24%;  width: 14px; height: 14px; animation-delay: 0.7s; }
+/* Rare: four sparkles. Super Rare and Secret: all six. */
+.gacha-reveal[data-rarity="rare"] .spark.s5,
+.gacha-reveal[data-rarity="rare"] .spark.s6 { display: none; }
+
+@keyframes twinkle {
+  0%, 100% { transform: scale(0.3) rotate(0); opacity: 0; }
+  50% { transform: scale(1) rotate(20deg); opacity: 1; }
+}
+
+/* Super Rare and Secret: a soft gold glow around the picture */
+.gacha-reveal[data-rarity="super-rare"] .reveal-image,
+.gacha-reveal[data-rarity="secret"] .reveal-image {
+  overflow: visible;
+  box-shadow: 0 0 0 3px var(--gold);
+  animation: gold-glow 2s ease-in-out infinite;
+}
+.gacha-reveal[data-rarity="super-rare"] .reveal-image img,
+.gacha-reveal[data-rarity="super-rare"] .reveal-image video,
+.gacha-reveal[data-rarity="secret"] .reveal-image img,
+.gacha-reveal[data-rarity="secret"] .reveal-image video { border-radius: 8px; }
+@keyframes gold-glow {
+  0%, 100% { box-shadow: 0 0 0 3px var(--gold), 0 0 18px 2px rgba(230, 189, 63, 0.35); }
+  50%      { box-shadow: 0 0 0 3px var(--gold), 0 0 34px 10px rgba(230, 189, 63, 0.6); }
+}
+
+/* Secret: black badge with yellow letters */
+.gacha-reveal[data-rarity="secret"] .reveal-badge {
+  background: var(--ink);
+  color: var(--eye);
+  font-size: 14px;
+  padding: 2px 18px;
+}
+
+/* Secret: the whole screen goes dark and two yellow eyes blink */
+.gacha-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 54px;
+  background: var(--ink);
+  animation: fade-in 0.5s ease;
+  transition: opacity 0.6s ease;
+}
+.gacha-curtain.is-leaving { opacity: 0; }
+.curtain-eye {
+  width: 44px;
+  height: 44px;
+  border: 7px solid var(--eye);
+  border-radius: 50%;
+  animation: eye-blink 2.3s ease-in-out;
+}
+@keyframes eye-blink {
+  0%, 20% { transform: scaleY(0.05); opacity: 0; }
+  30% { transform: scaleY(1); opacity: 1; }
+  55% { transform: scaleY(1); }
+  61% { transform: scaleY(0.08); }
+  67% { transform: scaleY(1); }
+  78% { transform: scaleY(1); }
+  84% { transform: scaleY(0.08); }
+  90%, 100% { transform: scaleY(1); opacity: 1; }
 }
 
 /* Ding Ding peeks up from the bottom edge */
@@ -497,7 +680,7 @@ video.motion {
   max-width: 560px;
   margin: 0 auto;
   font-family: var(--font-head);
-  font-weight: 400;
+  font-weight: var(--head-weight);
   font-size: 26px;
   line-height: 1.4;
   color: var(--ink);
@@ -518,6 +701,7 @@ video.motion {
   border-radius: 16px;
   background: #fff;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 16px;
   line-height: 1.4;
   color: var(--ink);
@@ -534,6 +718,7 @@ video.motion {
   background: none;
   padding: 6px 10px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 13px;
   color: var(--muted);
   cursor: pointer;
@@ -555,6 +740,7 @@ video.motion {
 .card-you {
   margin: 0 0 12px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 15px;
   color: var(--muted);
 }
@@ -572,7 +758,7 @@ video.motion {
 .card-name {
   margin: 16px 0 0;
   font-family: var(--font-head);
-  font-weight: 400;
+  font-weight: var(--head-weight);
   font-size: 28px;
   line-height: 1.3;
   color: var(--ink);
@@ -581,6 +767,63 @@ video.motion {
 .card-desc { margin: 12px 0 0; }
 
 
+
+/* ---------- Rarity badges (R / SR / SECRET), like gacha stickers ----------
+   Made by rarityBadge() in js/collection.js. Common has no badge.
+   Always Yusei Magic (also in Thai), slightly tilted. */
+.rarity-badge {
+  display: inline-block;
+  padding: 2px 9px 3px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  font-family: 'Yusei Magic', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  transform: rotate(8deg);
+  white-space: nowrap;
+}
+.rarity-rare       { background: #fff; }
+.rarity-super-rare { background: var(--eye); }
+.rarity-secret { background: var(--ink); color: var(--gold); }
+/* gold letters with a soft light passing over them */
+.rarity-secret span {
+  background-image: linear-gradient(110deg, var(--gold) 35%, #fff6cf 50%, var(--gold) 65%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2.6s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: -150% 0; }
+}
+
+/* On grid tiles: small, in the top-right corner */
+.tile .rarity-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+  padding: 1px 6px 2px;
+  border-width: 2px;
+  font-size: 10px;
+  pointer-events: none;
+}
+
+/* Popup and gacha reveal: a bigger sticker on the picture's top-right corner */
+.detail-figure { position: relative; }
+.badge-slot {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  z-index: 2;
+}
+.detail-figure .badge-slot { top: 8px; right: -6px; }
+.badge-slot .rarity-badge { font-size: 16px; padding: 3px 12px 4px; border-width: 3px; }
 
 /* ---------- Detail popup ---------- */
 
@@ -636,6 +879,7 @@ video.motion {
 .detail-no {
   margin: 16px 0 0;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 12px;
   letter-spacing: 0.1em;
   color: var(--muted);
@@ -644,13 +888,14 @@ video.motion {
 .detail-name {
   margin: 2px 0 0;
   font-family: var(--font-head);
-  font-weight: 400;
+  font-weight: var(--head-weight);
   font-size: 26px;
   line-height: 1.3;
   color: var(--ink);
 }
 
 .detail-cat { margin: 8px 0 0; }
+
 
 .tag {
   display: inline-block;
@@ -659,10 +904,151 @@ video.motion {
   background: var(--ink);
   color: #fff;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 12px;
 }
 
 .detail-desc { margin: 12px 0 0; }
+
+/* ---------- Reward: celebration and certificate (js/reward.js) ---------- */
+
+/* full-screen celebration */
+.celebrate {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  overflow: hidden;
+}
+.celebrate::backdrop { background: #fff; }
+.celebrate[open] { display: flex; align-items: center; justify-content: center; }
+
+/* all the DING DINGs, popping in around the card */
+.celebrate-wall {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  gap: 3px;
+  padding: 3px;
+}
+.wall-cell { overflow: hidden; border-radius: 6px; background: var(--tile); animation: wall-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) backwards; }
+.wall-cell:empty { background: none; animation: none; }
+.wall-cell img { width: 100%; height: 100%; object-fit: cover; }
+.wall-cell.is-secret { background: #fff; }
+.wall-cell.is-secret img { object-fit: contain; object-position: center bottom; }
+@keyframes wall-pop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+/* confetti, falling once */
+.confetti { position: absolute; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+.confetti span {
+  position: absolute;
+  top: -20px;
+  width: 8px;
+  height: 13px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall 3.5s ease-in forwards;
+}
+.confetti span.round { width: 10px; height: 10px; border-radius: 50%; }
+@keyframes confetti-fall {
+  0%   { opacity: 1; transform: translate(0, 0) rotate(0); }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--drift), 105vh) rotate(var(--spin)); }
+}
+
+/* the card in the middle */
+.celebrate-card {
+  position: relative;
+  z-index: 2;
+  width: min(330px, calc(100vw - 48px));
+  padding: 18px 18px 20px;
+  border: 2px solid var(--ink);
+  border-radius: 20px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 0 0 6px #fff, 0 0 40px 12px rgba(230, 189, 63, 0.45);
+  animation: card-pop 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) 0.2s backwards;
+}
+@keyframes card-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+.celebrate-title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  font-size: 40px;
+  line-height: 1.15;
+  color: var(--ink);
+  animation: title-bounce 1.2s ease-in-out 0.8s 2;
+}
+@keyframes title-bounce {
+  0%, 100% { transform: none; }
+  30% { transform: translateY(-6px) scale(1.05); }
+  60% { transform: translateY(1px); }
+}
+.celebrate-lead { margin: 4px 0 12px; font-size: 14px; color: var(--muted); }
+.celebrate-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #b7d8da;
+}
+.celebrate-image img { width: 100%; height: 100%; object-fit: cover; }
+.celebrate-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+
+/* certificate popup */
+.cert { text-align: center; }
+.cert-title {
+  margin: 4px 0 14px;
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  font-size: 24px;
+  color: var(--ink);
+}
+.cert-label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  font-size: 13px;
+  color: var(--muted);
+}
+.cert-input {
+  width: min(260px, 100%);
+  padding: 8px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  font-size: 16px;   /* 16px or more: iPhone does not zoom in on the field */
+  text-align: center;
+  color: var(--ink);
+  background: #fff;
+}
+.cert-input:focus { outline: 3px solid var(--eye); outline-offset: 1px; }
+.cert-preview {
+  display: block;
+  width: min(210px, 55vw);
+  aspect-ratio: 9 / 16;
+  margin: 16px auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--tile);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti { display: none; }
+}
 
 /* ---------- About (the "Hello!" section of the Sally Payne reference) ---------- */
 
@@ -689,7 +1075,7 @@ video.motion {
 .link-group h2 {
   margin: 0 0 6px;
   font-family: var(--font-head);
-  font-weight: 400;
+  font-weight: var(--head-weight);
   font-size: 13px;
   letter-spacing: 0.08em;
   color: var(--muted);
@@ -702,6 +1088,7 @@ video.motion {
   padding: 0 6px;
   border-radius: 6px;
   font-family: var(--font-head);
+  font-weight: var(--head-weight);
   font-size: 16px;
   line-height: 1.7;
   color: var(--ink);
@@ -759,6 +1146,7 @@ video.motion {
   .grid { grid-template-columns: repeat(4, 1fr); }
   .logo img { width: 220px; }
   .page-title { font-size: 42px; }
+  .site-header { padding-top: 28px; }
   .lang-toggle { top: 24px; right: 24px; }
 }
 

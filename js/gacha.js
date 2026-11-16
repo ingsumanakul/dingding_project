@@ -1,4 +1,19 @@
 // Gacha page: capsule animation and reveal. No limit; repeats are allowed.
+//
+// Each spin first picks a rarity tier (ODDS below), then one Ding Ding from
+// that tier. The reveal gets a bigger effect the rarer the tier is.
+
+// Chance of each tier per spin, in percent (must add up to 100).
+var ODDS = [
+  { rarity: 'common',     chance: 65 },
+  { rarity: 'rare',       chance: 20 },
+  { rarity: 'super-rare', chance: 13 },
+  { rarity: 'secret',     chance: 2 }
+];
+
+// Inside a tier, a Ding Ding not collected yet is this many times as likely
+// as one already collected. Repeats still happen, just less often.
+var NEW_WEIGHT = 10;
 
 var Gacha = {
   items: [],
@@ -29,18 +44,32 @@ var Gacha = {
     return Array.isArray(ids) ? ids : [];
   },
 
-  // Random, repeats allowed. A Ding Ding not collected yet is twice as
-  // likely as one already collected (weight 2 against weight 1).
+  // Step 1: the tier, by the chances in ODDS.
+  pickRarity: function () {
+    var roll = Math.random() * 100;
+    for (var i = 0; i < ODDS.length; i++) {
+      roll -= ODDS[i].chance;
+      if (roll < 0) return ODDS[i].rarity;
+    }
+    return ODDS[0].rarity;
+  },
+
+  // Step 2: one Ding Ding from that tier. Repeats are allowed, but one not
+  // collected yet is NEW_WEIGHT times as likely as one already collected.
   pick: function () {
+    var rarity = this.pickRarity();
+    var pool = this.items.filter(function (it) { return it.rarity === rarity; });
+    if (!pool.length) pool = this.items;   // just in case a tier is empty
+
     var have = this.unlocked();
-    var weights = this.items.map(function (it) { return have.indexOf(it.id) === -1 ? 2 : 1; });
+    var weights = pool.map(function (it) { return have.indexOf(it.id) === -1 ? NEW_WEIGHT : 1; });
     var total = weights.reduce(function (sum, w) { return sum + w; }, 0);
     var roll = Math.random() * total;
-    for (var i = 0; i < this.items.length; i++) {
+    for (var i = 0; i < pool.length; i++) {
       roll -= weights[i];
-      if (roll < 0) return this.items[i];
+      if (roll < 0) return pool[i];
     }
-    return this.items[this.items.length - 1];
+    return pool[pool.length - 1];
   },
 
   // ---- the spin -------------------------------------------------------
@@ -56,6 +85,8 @@ var Gacha = {
 
     // Save first, so a new Ding Ding is never lost if the page is closed mid-animation.
     if (this.currentIsNew) Store.set(KEYS.unlocked, have.concat(item.id));
+    // The very last one? Then the celebration follows the reveal (js/reward.js).
+    var completed = this.currentIsNew && Reward.check();
     Collection.render();
     this.renderText();
 
@@ -64,10 +95,14 @@ var Gacha = {
 
     var stage = document.getElementById('gacha-stage');
     var capsule = document.getElementById('gacha-capsule');
+    var curtain = document.getElementById('gacha-curtain');
+    var rarity = item.rarity;
+    var special = rarity === 'super-rare' || rarity === 'secret';
     // With "reduce motion" the CSS animations are off, so don't wait for them.
     var speed = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0.1 : 1;
     function wait(ms) { return new Promise(function (ok) { setTimeout(ok, ms * speed); }); }
 
+    capsule.setAttribute('data-rarity', rarity);      // the capsule colour hints at the tier
     stage.classList.add('is-spinning');               // handle turns, capsules jiggle
     wait(1000).then(function () {
       stage.classList.remove('is-spinning');
@@ -75,16 +110,29 @@ var Gacha = {
       capsule.className = 'capsule is-dropping';      // capsule falls out and bounces
       return wait(900);
     }).then(function () {
-      capsule.className = 'capsule is-shaking';       // a little wiggle...
-      return wait(700);
+      // a little wiggle... (Super Rare and Secret: a long, hard shake with a glow)
+      capsule.className = special ? 'capsule is-shaking-hard' : 'capsule is-shaking';
+      return wait(special ? 1600 : 700);
     }).then(function () {
       capsule.className = 'capsule is-open';          // ...and it pops open
-      return wait(450);
+      if (rarity !== 'secret') return wait(450);
+      // Secret: the screen goes dark, two yellow eyes blink, then the reveal
+      curtain.hidden = false;
+      return wait(2300);
     }).then(function () {
       capsule.hidden = true;
       capsule.className = 'capsule';
       self.busy = false;
       self.showReveal();
+      if (rarity !== 'secret') return;
+      curtain.classList.add('is-leaving');            // fade the dark screen away
+      return wait(600).then(function () {
+        curtain.hidden = true;
+        curtain.classList.remove('is-leaving');
+      });
+    }).then(function () {
+      // Collected everything: let the reveal be seen, then celebrate.
+      if (completed) return wait(2500).then(function () { Reward.celebrate(); });
     });
   },
 
@@ -105,6 +153,7 @@ var Gacha = {
     var reveal = document.getElementById('gacha-reveal');
 
     document.getElementById('gacha-machine-view').hidden = true;
+    reveal.setAttribute('data-rarity', item.rarity);  // the CSS adds sparkles / glow per tier
     reveal.hidden = false;
     this.renderText();
     window.scrollTo(0, 0);
@@ -118,9 +167,12 @@ var Gacha = {
   renderText: function () {
     var item = this.current;
     if (!item) return;
+    var secret = item.rarity === 'secret';
     var badge = document.getElementById('reveal-badge');
-    badge.textContent = 'No. ' + item.id + ' · ' + I18n.t(this.currentIsNew ? 'gacha.new' : 'gacha.met');
-    badge.classList.toggle('is-new', this.currentIsNew);
+    var label = secret ? 'gacha.secret' : this.currentIsNew ? 'gacha.new' : 'gacha.met';
+    badge.textContent = 'No. ' + item.id + ' · ' + I18n.t(label);
+    badge.classList.toggle('is-new', this.currentIsNew && !secret);
+    showRarityBadge(document.getElementById('reveal-rarity'), item);
     document.getElementById('reveal-name').textContent = item.name[I18n.lang];
     document.getElementById('reveal-desc').textContent = item.description[I18n.lang];
     document.getElementById('reveal-img').alt = item.name[I18n.lang];

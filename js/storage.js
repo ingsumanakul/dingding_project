@@ -21,7 +21,9 @@ var Store = {
 
 // Keys used across the site
 var KEYS = {
-  lang: 'dd.lang',              // "en" | "ja"
+  lang: 'dd.lang',              // "en" | "th" | "ja"
   unlocked: 'dd.unlocked',      // array of ids, written by the Gacha
-  quiz: 'dd.quiz'               // id of the last quiz result
+  quiz: 'dd.quiz',              // id of the last quiz result
+  completed: 'dd.completed',    // "YYYY-MM-DD": the day every DING DING was collected
+  player: 'dd.player'           // the name on the certificate
 };

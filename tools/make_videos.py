@@ -15,6 +15,10 @@ inside the project (logos/ding_normal.gif):
                                     Eyes stay open for HOME_CAT_HOLD seconds, then
                                     the blink plays at the GIF's own speed.
 
+and the reward animation for collecting everything (logos/winner.gif):
+
+    video/winner.mp4 / .webm        900px wide, like the artworks
+
 Needs Pillow and ffmpeg (for example: brew install ffmpeg).
 Run from the project folder:
 
@@ -90,14 +94,26 @@ def make_home_cat():
         print('made', out)
 
 
+def make_winner():
+    """The reward animation for collecting everything (logos/winner.gif)."""
+    gif = 'logos/winner.gif'
+    if not os.path.exists(gif):
+        return
+    colour = ['-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709']
+    for out, args in codecs('winner'):
+        convert(gif, out, args + colour, first_filters='format=rgb24,')
+        print('made', out)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     make_home_cat()
+    make_winner()
 
     redo_all = '--all' in sys.argv
     folders = [a for a in sys.argv[1:] if not a.startswith('--')]
     if not folders:
-        print('No GIF folder given, so only the Home / About cat was made.')
+        print('No GIF folder given, so only the Home / About cat and the reward were made.')
         return
     if len(folders) != 1:
         sys.exit('Usage: python3 tools/make_videos.py <folder with the GIFs> [--all]')

@@ -21,10 +21,11 @@ var Motion = {
     video.poster = img.currentSrc || img.src;
 
     var webm = document.createElement('source');
-    webm.src = this.DIR + item.id + '.webm';
+    var name = item.media || item.id;   // the Secret uses video/ding-normal.*
+    webm.src = this.DIR + name + '.webm';
     webm.type = 'video/webm';
     var mp4 = document.createElement('source');
-    mp4.src = this.DIR + item.id + '.mp4';
+    mp4.src = this.DIR + name + '.mp4';
     mp4.type = 'video/mp4';
     video.appendChild(webm);
     video.appendChild(mp4);

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ding Ding</title>
-  <meta name="description" content="Ding Ding — a black-and-white cat drawn by Ing.">
+  <title>DING DING</title>
+  <meta name="description" content="DING DING — a black-and-white cat drawn by Ing of INGINGE DESIGN.">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <body>
 
   <header class="site-header">
-    <a class="logo" href="#home" aria-label="Ding Ding home">
+    <a class="logo" href="#home" aria-label="DING DING home">
       <img src="thumbs/logo-dingding.webp" alt="DING DING" width="480" height="92">
     </a>
 
@@ -31,7 +31,9 @@
     <div class="lang-toggle" role="group" aria-label="Language">
       <button type="button" data-lang="en">EN</button>
       <span aria-hidden="true">/</span>
-      <button type="button" data-lang="ja">JA</button>
+      <button type="button" data-lang="th" aria-label="ภาษาไทย">TH</button>
+      <span aria-hidden="true">/</span>
+      <button type="button" data-lang="ja" aria-label="日本語">JP</button>
     </div>
   </header>
 
@@ -43,7 +45,7 @@
 
       <!-- Ding Ding peeks up from behind a thin line (the "counter edge") -->
       <div class="home-counter">
-        <div class="home-peek"><img id="home-cat" src="thumbs/ding-normal.webp" alt="Ding Ding" width="720" height="693"></div>
+        <div class="home-peek"><img id="home-cat" src="thumbs/ding-normal.webp" alt="DING DING" width="720" height="693"></div>
       </div>
 
       <!-- three text links, each with a small hint -->
@@ -68,13 +70,19 @@
       <h1 class="page-title" data-i18n="collection.title">Collection</h1>
 
       <div class="progress">
-        <p class="progress-text" id="progress-text"></p>
+        <div class="progress-head">
+          <p class="progress-text" id="progress-text"></p>
+          <span class="complete-badge" id="complete-badge" data-i18n="reward.complete" hidden>COMPLETE!</span>
+        </div>
         <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <button type="button" class="pill pill-outline pill-small" id="open-cert" data-i18n="reward.open" hidden>Certificate</button>
       </div>
 
       <div class="filters" id="filters" role="group" aria-label="Category"></div>
 
       <ul class="grid" id="grid"></ul>
+      <!-- the Secret, once found: alone at the bottom, on plain white -->
+      <div class="secret-spot" id="secret-spot" hidden></div>
     </section>
 
     <!-- GACHA -->
@@ -83,7 +91,7 @@
       <!-- 1. the machine -->
       <div class="gacha-machine-view" id="gacha-machine-view">
         <h1 class="page-title" data-i18n="gacha.title">Gacha</h1>
-        <p class="page-lead" data-i18n="gacha.lead">Turn the handle and meet a Ding Ding!</p>
+        <p class="page-lead" data-i18n="gacha.lead">Turn the handle and meet a DING DING!</p>
 
         <div class="gacha-stage" id="gacha-stage">
           <svg class="machine" viewBox="0 0 240 330" aria-hidden="true">
@@ -127,11 +135,27 @@
         <p class="reveal-badge" id="reveal-badge"></p>
         <h1 class="page-title" id="reveal-name"></h1>
         <p class="page-lead" id="reveal-desc"></p>
-        <div class="reveal-image"><img id="reveal-img" alt=""></div>
+        <!-- the sparkles only show for Rare and above (see data-rarity in the CSS) -->
+        <div class="reveal-stage">
+          <div class="reveal-image"><img id="reveal-img" alt=""></div>
+          <span class="badge-slot" id="reveal-rarity" hidden></span>
+          <span class="spark s1" aria-hidden="true"></span>
+          <span class="spark s2" aria-hidden="true"></span>
+          <span class="spark s3" aria-hidden="true"></span>
+          <span class="spark s4" aria-hidden="true"></span>
+          <span class="spark s5" aria-hidden="true"></span>
+          <span class="spark s6" aria-hidden="true"></span>
+        </div>
         <div class="reveal-buttons">
           <button type="button" class="pill pill-outline" id="reveal-see" data-i18n="gacha.see">See in Collection</button>
           <button type="button" class="pill" id="reveal-again" data-i18n="gacha.again">Spin again</button>
         </div>
+      </div>
+
+      <!-- Secret only: the screen goes dark and two yellow eyes blink before the reveal -->
+      <div class="gacha-curtain" id="gacha-curtain" aria-hidden="true" hidden>
+        <span class="curtain-eye"></span>
+        <span class="curtain-eye"></span>
       </div>
 
     </section>
@@ -141,8 +165,8 @@
 
       <!-- 1. intro -->
       <div id="quiz-intro">
-        <h1 class="page-title" data-i18n="quiz.title">Which Ding Ding are you?</h1>
-        <p class="page-lead" data-i18n="quiz.lead">Five little questions to find your Ding Ding.</p>
+        <h1 class="page-title" data-i18n="quiz.title">Which DING DING are you?</h1>
+        <p class="page-lead" data-i18n="quiz.lead">Five little questions to find your DING DING.</p>
         <p class="quiz-start"><button type="button" class="pill pill-big" id="quiz-start" data-i18n="quiz.start">Start</button></p>
       </div>
 
@@ -185,12 +209,12 @@
       <!-- two small groups of links (all open in a new tab) -->
       <div class="about-links">
         <div class="link-group">
-          <h2 data-i18n="about.groupDing">Ding Ding</h2>
+          <h2 data-i18n="about.groupDing">DING DING</h2>
           <a href="https://www.instagram.com/dingding.thecat/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.facebook.com/dingdingthecat" target="_blank" rel="noopener">Facebook</a>
         </div>
         <div class="link-group">
-          <h2 data-i18n="about.groupIng">Ing (the artist)</h2>
+          <h2 data-i18n="about.groupIng">INGINGE DESIGN</h2>
           <a href="https://www.instagram.com/inginge.design/" target="_blank" rel="noopener">Instagram</a>
           <a href="https://www.facebook.com/ingingedesign" target="_blank" rel="noopener">Facebook</a>
           <a href="https://linktr.ee/inginge" target="_blank" rel="noopener">Linktree</a>
@@ -204,17 +228,44 @@
 
   <footer class="site-footer">
     <img src="thumbs/logo-inginge.webp" alt="" width="48" height="48">
-    <p>© Ding Ding · <span data-i18n="footer.by">drawn by Ing</span></p>
+    <p>© DING DING THE CAT by INGINGE DESIGN</p>
   </footer>
 
   <!-- Detail popup -->
   <dialog class="detail" id="detail">
     <button type="button" class="detail-close" id="detail-close" aria-label="Close">×</button>
-    <div class="detail-image"><img id="detail-img" alt=""></div>
+    <div class="detail-figure">
+      <div class="detail-image"><img id="detail-img" alt=""></div>
+      <span class="badge-slot" id="detail-rarity" hidden></span>
+    </div>
     <p class="detail-no" id="detail-no"></p>
     <h2 class="detail-name" id="detail-name"></h2>
     <p class="detail-cat"><span class="tag" id="detail-cat"></span></p>
     <p class="detail-desc" id="detail-desc"></p>
+  </dialog>
+
+  <!-- Reward for collecting everything (js/reward.js) -->
+  <dialog class="celebrate" id="celebrate" aria-labelledby="celebrate-title">
+    <div class="celebrate-wall" id="celebrate-wall" aria-hidden="true"></div>
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <div class="celebrate-card">
+      <h2 class="celebrate-title" id="celebrate-title" data-i18n="reward.complete">COMPLETE!</h2>
+      <p class="celebrate-lead" data-i18n="reward.lead">You collected every DING DING!</p>
+      <div class="celebrate-image"><img id="celebrate-img" src="thumbs/winner-800.webp" alt="" width="800" height="800"></div>
+      <div class="celebrate-buttons">
+        <button type="button" class="pill" id="celebrate-cert" data-i18n="reward.getCert">Get your certificate</button>
+        <button type="button" class="pill pill-outline" id="celebrate-close" data-i18n="reward.close">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="detail cert" id="cert" aria-labelledby="cert-title">
+    <button type="button" class="detail-close" id="cert-close" aria-label="Close">×</button>
+    <h2 class="cert-title" id="cert-title" data-i18n="reward.title">DING DING MASTER</h2>
+    <label class="cert-label" for="cert-name" data-i18n="reward.name">Your name</label>
+    <input class="cert-input" id="cert-name" type="text" maxlength="24" autocomplete="name">
+    <img class="cert-preview" id="cert-preview" alt="">
+    <button type="button" class="pill" id="cert-save">Save as image</button>
   </dialog>
 
   <script src="js/storage.js"></script>
@@ -222,7 +273,9 @@
   <script src="js/motion.js"></script>
   <script src="js/collection.js"></script>
   <script src="js/gacha.js"></script>
+  <script src="js/share.js"></script>
   <script src="js/quiz.js"></script>
+  <script src="js/reward.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

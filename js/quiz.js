@@ -10,6 +10,8 @@ var Quiz = {
   result: null,    // the Ding Ding shown on the result card
 
   init: function (items, quiz) {
+    // the Secret can only be found in the Gacha, never here
+    items = items.filter(function (it) { return it.rarity !== 'secret'; });
     this.items = items;
     this.questions = (quiz && quiz.questions) || [];
     var self = this;
@@ -20,10 +22,8 @@ var Quiz = {
     var saveBtn = document.getElementById('quiz-save');
     saveBtn.addEventListener('click', function () { self.save(); });
     // On phones the button opens the share sheet ("Save Image", Instagram…).
-    if (this.canShareFiles()) {
-      saveBtn.setAttribute('data-i18n', 'quiz.share');
-      saveBtn.textContent = I18n.t('quiz.share');
-    }
+    saveBtn.setAttribute('data-i18n', Share.labelKey());
+    saveBtn.textContent = I18n.t(Share.labelKey());
     // Unlocked result: "See in Collection". Still locked: "Find me in the Gacha!"
     document.getElementById('quiz-see').addEventListener('click', function () {
       if (self.result && Collection.isUnlocked(self.result.id)) {
@@ -159,22 +159,10 @@ var Quiz = {
       Motion.play(img, item);
     }
     // Get the card ready now, so the share sheet can open right on tap.
-    if (this.canShareFiles()) this.prepareCard(item);
+    if (Share.canShareFiles()) this.prepareCard(item);
   },
 
-  // ---- save / share as PNG --------------------------------------------
-  // Phones (touch screen + Web Share with files): open the share sheet.
-  // Desktop, or no file sharing: download the PNG.
-  canShareFiles: function () {
-    try {
-      var touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-      var test = new File([''], 'test.png', { type: 'image/png' });
-      return !!(touch && navigator.share && navigator.canShare && navigator.canShare({ files: [test] }));
-    } catch (e) {
-      return false;
-    }
-  },
-
+  // ---- save / share as PNG (js/share.js) -----------------------------
   card: null,   // { key, file, promise }: the last prepared card
 
   // Returns a Promise for the card as a PNG File. Cached per Ding Ding + language.
@@ -183,13 +171,10 @@ var Quiz = {
     if (this.card && this.card.key === key) return this.card.promise;
     var card = { key: key, file: null };
     card.promise = this.makeCard(item).then(function (canvas) {
-      return new Promise(function (ok, fail) {
-        canvas.toBlob(function (blob) {
-          if (!blob) return fail(new Error('toBlob failed'));
-          card.file = new File([blob], 'dingding-' + item.id + '.png', { type: 'image/png' });
-          ok(card.file);
-        }, 'image/png');
-      });
+      return Share.toFile(canvas, 'dingding-' + item.id + '.png');
+    }).then(function (file) {
+      card.file = file;
+      return file;
     });
     card.promise.catch(function () { if (Quiz.card === card) Quiz.card = null; });
     this.card = card;
@@ -197,42 +182,20 @@ var Quiz = {
   },
 
   save: function () {
-    var self = this;
     var item = this.result;
     if (!item) return;
     var key = item.id + '-' + I18n.lang;
     var ready = this.card && this.card.key === key && this.card.file;
-
-    // Card already made: share straight away (iOS needs this to happen
-    // during the tap, not after waiting).
-    if (ready && this.canShareFiles()) {
-      this.share(ready);
+    // Card already made: save/share straight away, during the tap.
+    if (ready) {
+      Share.save(ready);
       return;
     }
     this.prepareCard(item).then(function (file) {
-      if (self.canShareFiles()) self.share(file);
-      else self.download(file);
+      Share.save(file);
     }).catch(function (err) {
       console.error('Could not make the card image', err);
     });
-  },
-
-  share: function (file) {
-    var self = this;
-    navigator.share({ files: [file] }).catch(function (err) {
-      // AbortError = the user closed the share sheet: that's fine.
-      if (err && err.name !== 'AbortError') self.download(file);
-    });
-  },
-
-  download: function (file) {
-    var link = document.createElement('a');
-    link.href = URL.createObjectURL(file);
-    link.download = file.name;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
   },
 
   // Returns a Promise for a 1080 x 1920 canvas (Instagram Story size, 9:16).
@@ -243,8 +206,10 @@ var Quiz = {
     var W = 1080, H = 1920;
     var SAFE_TOP = 250, SAFE_BOTTOM = H - 250;
     var TOP = SAFE_TOP - 50;   // all the content below is placed relative to this
-    var HEAD = '"Yusei Magic", sans-serif';
-    var BODY = '"Yomogi", sans-serif';
+    var thai = lang === 'th';
+    var HEAD = thai ? '600 {size} "Mali", sans-serif' : '{size} "Yusei Magic", sans-serif';
+    var BODY = thai ? '{size} "Mali", sans-serif' : '{size} "Yomogi", sans-serif';
+    function font(family, size) { return family.replace('{size}', size + 'px'); }
     var name = item.name[lang];
     var desc = item.description[lang];
     var you = I18n.t('quiz.you');
@@ -262,8 +227,8 @@ var Quiz = {
     function loadFonts() {
       if (!document.fonts || !document.fonts.load) return Promise.resolve();
       return Promise.all([
-        document.fonts.load('40px ' + HEAD, you + name + cat),
-        document.fonts.load('40px ' + BODY, desc)
+        document.fonts.load(font(HEAD, 40), you + name + cat),
+        document.fonts.load(font(BODY, 40), desc)
       ]).catch(function () {});
     }
     function roundedRect(ctx, x, y, w, h, r) {
@@ -277,7 +242,20 @@ var Quiz = {
     }
     // Break text into lines. English breaks at spaces, Japanese at any character
     // (but never puts 、。！？ at the start of a line).
+    // Thai has no spaces between words, so it is split into whole words with
+    // Intl.Segmenter (or only at spaces in old browsers), and a very short last
+    // line gets a word from the line above, so no word is left alone.
     function wrap(ctx, text, maxWidth) {
+      if (thai) {
+        // balance: the narrowest width that still gives the same number of lines
+        var lines = wrapThai(ctx, text, maxWidth);
+        for (var w = maxWidth - 20; w > maxWidth / 2; w -= 20) {
+          var tryLines = wrapThai(ctx, text, w);
+          if (tryLines.length > lines.length) break;
+          lines = tryLines;
+        }
+        return lines;
+      }
       var parts = text.indexOf(' ') !== -1 ? text.split(' ') : text.split('');
       var joiner = text.indexOf(' ') !== -1 ? ' ' : '';
       var lines = [];
@@ -294,6 +272,34 @@ var Quiz = {
       });
       if (line) lines.push(line);
       return lines;
+    }
+    function wrapThai(ctx, text, maxWidth) {
+      var words;
+      if (window.Intl && Intl.Segmenter) {
+        words = Array.from(new Intl.Segmenter('th', { granularity: 'word' }).segment(text), function (s) { return s.segment; });
+      } else {
+        words = text.split(/( )/);
+      }
+      // lines as lists of words; a space or punctuation never starts a line
+      var lines = [[]];
+      words.forEach(function (w) {
+        var line = lines[lines.length - 1];
+        var prevWord = line[line.length - 1] || '';
+        var stick = /^[\s!?…)”’.,\u2060]+$/.test(w) || /\u2060$/.test(prevWord);
+        if (line.length && !stick && ctx.measureText(line.join('') + w).width > maxWidth) {
+          lines.push([w]);
+        } else {
+          line.push(w);
+        }
+      });
+      // no lonely word: move words down until the last line is at least a third full
+      var last = lines[lines.length - 1], prev = lines[lines.length - 2];
+      while (prev && prev.length > 1 &&
+             ctx.measureText(last.join('')).width < maxWidth / 3 &&
+             ctx.measureText(prev[prev.length - 1] + last.join('')).width <= maxWidth) {
+        last.unshift(prev.pop());
+      }
+      return lines.map(function (l) { return l.join('').trim(); }).filter(Boolean);
     }
 
     return Promise.all([
@@ -315,7 +321,7 @@ var Quiz = {
 
       // "You are…"
       ctx.fillStyle = '#8c8c8c';
-      ctx.font = '44px ' + HEAD;
+      ctx.font = font(HEAD, 44);
       ctx.fillText(you, W / 2, TOP + 118);
 
       // artwork, with rounded corners
@@ -327,16 +333,16 @@ var Quiz = {
       ctx.restore();
 
       // name (shrinks a little if it is very long)
-      var nameSize = 84;
+      var nameSize = thai ? 76 : 84;   // Thai marks above and below need a little more room
       ctx.fillStyle = '#1f1f1f';
       do {
-        ctx.font = nameSize + 'px ' + HEAD;
+        ctx.font = font(HEAD, nameSize);
         nameSize -= 4;
       } while (ctx.measureText(name).width > W - 120 && nameSize > 40);
       ctx.fillText(name, W / 2, TOP + 1082);
 
       // category tag (black pill)
-      ctx.font = '34px ' + HEAD;
+      ctx.font = font(HEAD, 34);
       var tagW = ctx.measureText(cat).width + 64;
       roundedRect(ctx, (W - tagW) / 2, TOP + 1116, tagW, 58, 29);
       ctx.fillStyle = '#1f1f1f';
@@ -346,9 +352,10 @@ var Quiz = {
 
       // description
       ctx.fillStyle = '#333333';
-      ctx.font = '40px ' + BODY;
+      var descSize = thai ? 36 : 40;
+      ctx.font = font(BODY, descSize);
       wrap(ctx, desc, W - 200).slice(0, 3).forEach(function (line, i) {
-        ctx.fillText(line, W / 2, TOP + 1246 + i * 58);
+        ctx.fillText(line, W / 2, TOP + (thai ? 1236 : 1246) + i * (thai ? 54 : 58));
       });
 
       var logoW = 300, logoH = logoW * logo.height / logo.width;

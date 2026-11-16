@@ -9,6 +9,8 @@ Output goes to thumbs/:
     thumbs/<id>-900.webp   popup / gacha reveal (before the GIF loads)
     thumbs/logo-dingding.webp, thumbs/logo-dingding-800.webp, thumbs/logo-inginge.webp
     thumbs/ding-normal.webp   the Ding Ding on Home and About (first frame of logos/ding_normal.gif)
+    thumbs/winner-400.webp, -800, -900   the reward picture for collecting everything
+                                          (first frame of logos/winner.png; not a collectible)
 
 It also makes the browser tab icons, in the project folder (next to index.html):
 
@@ -28,6 +30,7 @@ QUALITY = 82
 
 
 HOME_CAT = 'logos/ding_normal.gif'
+WINNER = 'logos/winner.png'   # reward art: a full square picture, like the artworks
 WHITE = 249   # anything this light in the GIF becomes pure white
 
 
@@ -124,6 +127,12 @@ def main():
         # the GIF background is a very light grey (251); make it pure white
         im = im.point(lambda v: min(255, round(v * 255 / WHITE)))
         save_webp(im, 720, os.path.join(OUT, 'ding-normal.webp'))
+    # Reward picture (winner.png is an animated PNG; its first frame is the still).
+    with Image.open(WINNER) as im:
+        im.seek(0)
+        im = im.convert('RGB')
+        for w in SIZES:
+            save_webp(im, w, os.path.join(OUT, f'winner-{w}.webp'))
     with Image.open('logos/logo_inginge.jpg') as im:
         save_webp(im.convert('RGB'), 160, os.path.join(OUT, 'logo-inginge.webp'))
 

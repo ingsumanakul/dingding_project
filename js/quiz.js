@@ -17,7 +17,13 @@ var Quiz = {
     document.getElementById('quiz-start').addEventListener('click', function () { self.start(); });
     document.getElementById('quiz-back').addEventListener('click', function () { self.back(); });
     document.getElementById('quiz-again').addEventListener('click', function () { self.start(); });
-    document.getElementById('quiz-save').addEventListener('click', function () { self.save(); });
+    var saveBtn = document.getElementById('quiz-save');
+    saveBtn.addEventListener('click', function () { self.save(); });
+    // On phones the button opens the share sheet ("Save Image", Instagram…).
+    if (this.canShareFiles()) {
+      saveBtn.setAttribute('data-i18n', 'quiz.share');
+      saveBtn.textContent = I18n.t('quiz.share');
+    }
     // Unlocked result: "See in Collection". Still locked: "Find me in the Gacha!"
     document.getElementById('quiz-see').addEventListener('click', function () {
       if (self.result && Collection.isUnlocked(self.result.id)) {
@@ -152,26 +158,81 @@ var Quiz = {
       img.src = still;
       Motion.play(img, item);
     }
+    // Get the card ready now, so the share sheet can open right on tap.
+    if (this.canShareFiles()) this.prepareCard(item);
   },
 
-  // ---- save as PNG ----------------------------------------------------
-  // Draws the result card on a canvas (no libraries) and downloads it.
+  // ---- save / share as PNG --------------------------------------------
+  // Phones (touch screen + Web Share with files): open the share sheet.
+  // Desktop, or no file sharing: download the PNG.
+  canShareFiles: function () {
+    try {
+      var touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      var test = new File([''], 'test.png', { type: 'image/png' });
+      return !!(touch && navigator.share && navigator.canShare && navigator.canShare({ files: [test] }));
+    } catch (e) {
+      return false;
+    }
+  },
+
+  card: null,   // { key, file, promise }: the last prepared card
+
+  // Returns a Promise for the card as a PNG File. Cached per Ding Ding + language.
+  prepareCard: function (item) {
+    var key = item.id + '-' + I18n.lang;
+    if (this.card && this.card.key === key) return this.card.promise;
+    var card = { key: key, file: null };
+    card.promise = this.makeCard(item).then(function (canvas) {
+      return new Promise(function (ok, fail) {
+        canvas.toBlob(function (blob) {
+          if (!blob) return fail(new Error('toBlob failed'));
+          card.file = new File([blob], 'dingding-' + item.id + '.png', { type: 'image/png' });
+          ok(card.file);
+        }, 'image/png');
+      });
+    });
+    card.promise.catch(function () { if (Quiz.card === card) Quiz.card = null; });
+    this.card = card;
+    return card.promise;
+  },
+
   save: function () {
+    var self = this;
     var item = this.result;
     if (!item) return;
-    this.makeCard(item).then(function (canvas) {
-      canvas.toBlob(function (blob) {
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'dingding-' + item.id + '.png';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
-      }, 'image/png');
+    var key = item.id + '-' + I18n.lang;
+    var ready = this.card && this.card.key === key && this.card.file;
+
+    // Card already made: share straight away (iOS needs this to happen
+    // during the tap, not after waiting).
+    if (ready && this.canShareFiles()) {
+      this.share(ready);
+      return;
+    }
+    this.prepareCard(item).then(function (file) {
+      if (self.canShareFiles()) self.share(file);
+      else self.download(file);
     }).catch(function (err) {
       console.error('Could not make the card image', err);
     });
+  },
+
+  share: function (file) {
+    var self = this;
+    navigator.share({ files: [file] }).catch(function (err) {
+      // AbortError = the user closed the share sheet: that's fine.
+      if (err && err.name !== 'AbortError') self.download(file);
+    });
+  },
+
+  download: function (file) {
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(file);
+    link.download = file.name;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
   },
 
   // Returns a Promise for a 1080 x 1920 canvas (Instagram Story size, 9:16).

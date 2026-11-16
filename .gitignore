@@ -1,0 +1,16 @@
+# Full-size originals and working material: never upload.
+# The live site only uses the web copies in thumbs/ and video/.
+jpg_and_gif/
+logos/
+design-ref/
+font/
+
+# macOS and scratch files
+.DS_Store
+__pycache__/
+*.pyc
+thumbs/sil-sheet.jpg
+
+# Local editor / tool settings
+.claude/settings.local.json
+.vscode/

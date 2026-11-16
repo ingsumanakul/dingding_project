@@ -1,0 +1,772 @@
+/* =========================================================
+   Ding Ding — styles
+   Mobile-first. Colours are taken from the artwork.
+   ========================================================= */
+
+:root {
+  --ink: #1f1f1f;          /* Ding Ding's black */
+  --text: #333;
+  --muted: #8c8c8c;
+  --line: #e6e6e3;
+  --tile: #f2f2f0;         /* light grey tiles */
+  --paper: #ffffff;
+  --eye: #f2dc8a;          /* Ding Ding's yellow eyes */
+  --blush: #f1c9c4;        /* soft pink from the backgrounds */
+
+  --font-head: 'Yusei Magic', system-ui, sans-serif;
+  --font-body: 'Yomogi', system-ui, sans-serif;
+
+  --gap: 4px;
+  --max: 1080px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; }
+
+button { font: inherit; color: inherit; }
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 28px 16px 8px;
+  text-align: center;
+}
+
+.logo { display: inline-block; }
+.logo img { width: 190px; margin: 0 auto; }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 18px;
+  margin-top: 14px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+}
+
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s;
+}
+
+.site-nav a:hover { color: var(--ink); }
+.site-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+
+.lang-toggle {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.lang-toggle button {
+  border: 0;
+  background: none;
+  padding: 4px 4px;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.lang-toggle button[aria-pressed="true"] { color: var(--ink); }
+
+/* ---------- Pages ---------- */
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.page {
+  padding: 40px 0 56px;
+  animation: fade-in 0.4s ease;
+}
+
+.page-title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.page-lead {
+  margin: 10px 0 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Black pill buttons (Growwwkit style) */
+.pill {
+  display: inline-block;
+  padding: 8px 22px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 14px;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.pill:hover { transform: translateY(-2px); }
+
+/* ---------- Home ---------- */
+
+/* On Home the big logo is in the page, so hide the small one in the header. */
+body[data-page="home"] .site-header .logo { display: none; }
+body[data-page="home"] .site-nav { margin-top: 26px; }
+
+.page-home { padding-top: 44px; }
+
+.home-logo { margin: 0; }
+.home-logo img { width: min(330px, 86vw); margin: 0 auto; }
+
+/* The "counter edge": a thin line, a little wider than the cat. */
+.home-counter {
+  width: min(310px, 80vw);
+  margin: 36px auto 0;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+/* Ding Ding, just the cat on white. The box hides the part that
+   slides up from below, so it looks like peeking over the counter. */
+.home-peek {
+  position: relative;      /* the blinking video sits on top of the still */
+  width: min(250px, 64vw);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.home-peek img,
+.home-peek video {
+  width: 100%;
+  animation: home-peek 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.15) 0.15s backwards;
+}
+
+@keyframes home-peek {
+  from { transform: translateY(70%); }
+  to   { transform: none; }
+}
+
+/* Three text links in a row, each with a small grey hint. No boxes. */
+.home-doors {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 22px auto 0;
+}
+
+.door {
+  padding: 4px 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+.door-title {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-family: var(--font-head);
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+  transition: background 0.2s;
+}
+
+/* hover: the link turns yellow (like a highlighter pen) */
+.door:hover .door-title,
+.door:focus-visible .door-title { background: var(--eye); }
+
+.door-hint {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- Collection ---------- */
+
+.progress {
+  max-width: 280px;
+  margin: 14px auto 0;
+  text-align: center;
+}
+
+.progress-text {
+  margin: 0 0 6px;
+  font-family: var(--font-head);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.progress-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--tile);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ink);
+  transition: width 0.6s ease;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 28px 0 24px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-family: var(--font-head);
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.chip small { font-size: 11px; color: var(--muted); }
+.chip:hover { border-color: var(--ink); }
+
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.chip[aria-pressed="true"] small { color: #bbb; }
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: dense;
+  gap: var(--gap);
+}
+
+.tile { aspect-ratio: 1; background: var(--tile); }
+.tile-big { grid-column: span 2; grid-row: span 2; }
+
+.tile button {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.4s, transform 0.3s;
+}
+
+.tile button:hover img,
+.tile button:hover video { transform: scale(1.03); }
+
+/* animation video, placed exactly on top of the still picture (js/motion.js) */
+video.motion {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.tile button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* ---------- Gacha ---------- */
+
+.page-gacha { text-align: center; }
+
+.gacha-stage {
+  position: relative;
+  width: 220px;
+  margin: 28px auto 0;
+  padding-bottom: 74px;   /* room for the capsule to land */
+}
+
+/* The machine (SVG): black outline, white, one accent colour */
+.machine { display: block; width: 100%; height: auto; overflow: visible; }
+.m-line   { stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
+.m-white  { fill: #fff; }
+.m-accent { fill: var(--eye); }
+.m-ink    { fill: var(--ink); stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
+
+.m-knob { transform-box: fill-box; transform-origin: center; }
+.m-capsules { transform-box: fill-box; transform-origin: center bottom; }
+
+.is-spinning .m-knob { animation: knob-turn 1s ease-in-out; }
+.is-spinning .m-capsules { animation: jiggle 0.25s ease-in-out 4; }
+.is-spinning .machine { animation: machine-shake 0.25s ease-in-out 4; }
+
+@keyframes knob-turn { to { transform: rotate(360deg); } }
+@keyframes jiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-4deg) translateY(-3px); }
+  75% { transform: rotate(4deg) translateY(-1px); }
+}
+@keyframes machine-shake {
+  0%, 100% { transform: none; }
+  50% { transform: translateY(2px); }
+}
+
+/* The capsule that drops out of the chute */
+.capsule {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 64px;
+  height: 64px;
+  margin-left: -32px;
+}
+
+.capsule-top,
+.capsule-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  border: 4px solid var(--ink);
+}
+
+.capsule-top    { top: 0;    background: var(--eye); border-radius: 32px 32px 0 0; border-bottom-width: 2px; }
+.capsule-bottom { bottom: 0; background: #fff;       border-radius: 0 0 32px 32px; border-top-width: 2px; }
+
+.capsule.is-dropping { animation: capsule-drop 0.9s cubic-bezier(0.3, 0, 0.6, 1); }
+.capsule.is-shaking  { animation: capsule-shake 0.35s ease-in-out 2; }
+.capsule.is-open .capsule-top    { animation: open-top 0.45s ease-out forwards; }
+.capsule.is-open .capsule-bottom { animation: open-bottom 0.45s ease-out forwards; }
+
+@keyframes capsule-drop {
+  0%   { transform: translateY(-56px) scale(0.5); opacity: 0; }
+  15%  { opacity: 1; }
+  55%  { transform: translateY(0) scale(1); }
+  70%  { transform: translateY(-16px); }
+  85%  { transform: translateY(0); }
+  93%  { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+@keyframes capsule-shake {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-12deg); }
+  75% { transform: rotate(12deg); }
+}
+@keyframes open-top    { to { transform: translateY(-34px) rotate(-18deg); opacity: 0; } }
+@keyframes open-bottom { to { transform: translateY(12px); opacity: 0; } }
+
+.pill { border: 2px solid var(--ink); cursor: pointer; }
+.pill-big { padding: 10px 40px; font-size: 18px; }
+#gacha-spin { margin-top: 12px; }
+.pill-outline { background: #fff; color: var(--ink); }
+.pill:disabled { background: var(--tile); border-color: var(--tile); color: var(--muted); cursor: default; transform: none; }
+
+/* Reveal: big title, one image, lots of space (the "Apple" reference) */
+.gacha-reveal { animation: fade-in 0.5s ease; }
+
+.reveal-badge {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 1px 14px;
+  border-radius: 999px;
+  font-family: var(--font-head);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.reveal-badge.is-new { background: var(--eye); color: var(--ink); }
+
+.reveal-image {
+  position: relative;
+  width: min(360px, 82vw);
+  aspect-ratio: 1;
+  margin: 28px auto 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--tile);
+}
+
+/* Ding Ding peeks up from the bottom edge */
+.reveal-image img,
+.reveal-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: peek-up 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+@keyframes peek-up {
+  from { transform: translateY(40%); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+.reveal-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ---------- Quiz ---------- */
+
+.page-quiz { text-align: center; }
+.quiz-start { margin: 32px 0 0; }
+
+.quiz-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tile);
+  border: 2px solid var(--tile);
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.dot.is-done { background: var(--ink); border-color: var(--ink); }
+.dot.is-current { background: var(--eye); border-color: var(--ink); }
+
+.quiz-text {
+  max-width: 560px;
+  margin: 0 auto;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.4;
+  color: var(--ink);
+  animation: fade-in 0.4s ease;
+}
+
+.quiz-answers {
+  display: grid;
+  gap: 10px;
+  max-width: 420px;
+  margin: 28px auto 0;
+  animation: fade-in 0.4s ease;
+}
+
+.answer {
+  padding: 14px 18px;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  background: #fff;
+  font-family: var(--font-head);
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.answer:hover { transform: translateY(-2px); background: var(--eye); }
+.answer.is-chosen { background: var(--ink); color: #fff; }
+
+.quiz-back {
+  margin-top: 24px;
+  border: 0;
+  background: none;
+  padding: 6px 10px;
+  font-family: var(--font-head);
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.quiz-back:hover { color: var(--ink); }
+
+/* Result card (Growwwkit style: a labelled white card) */
+.quiz-card {
+  width: min(380px, 100%);
+  margin: 0 auto 24px;
+  padding: 18px 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  animation: pop-in 0.4s ease;
+}
+
+.card-you {
+  margin: 0 0 12px;
+  font-family: var(--font-head);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.card-image {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--tile);
+}
+
+.card-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.card-name {
+  margin: 16px 0 0;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.card-desc { margin: 12px 0 0; }
+
+
+
+/* ---------- Detail popup ---------- */
+
+.detail {
+  width: min(420px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 20px 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--text);
+  text-align: center;
+}
+
+.detail[open] { animation: pop-in 0.3s ease; }
+
+.detail::backdrop {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.detail-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.detail-close:hover { color: var(--ink); }
+
+.detail-image {
+  position: relative;
+  margin: 18px auto 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--tile);
+  aspect-ratio: 1;
+}
+
+.detail-image img { width: 100%; height: 100%; object-fit: cover; }
+
+.detail-no {
+  margin: 16px 0 0;
+  font-family: var(--font-head);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.detail-name {
+  margin: 2px 0 0;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.detail-cat { margin: 8px 0 0; }
+
+.tag {
+  display: inline-block;
+  padding: 1px 12px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 12px;
+}
+
+.detail-desc { margin: 12px 0 0; }
+
+/* ---------- About (the "Hello!" section of the Sally Payne reference) ---------- */
+
+.page-about { padding-bottom: 0; text-align: center; }
+
+.about-title { font-size: 46px; }
+
+.about-text {
+  max-width: 520px;
+  margin: 28px auto 0;
+}
+
+/* balance: even line lengths, so no single character is left alone on the last line */
+.about-text p { margin: 0 0 18px; text-wrap: balance; }
+.about-credit { font-size: 14px; color: var(--muted); }
+
+.about-links {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 36px;
+}
+
+.link-group h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-head);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.link-group a {
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-family: var(--font-head);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.link-group a:hover,
+.link-group a:focus-visible { background: var(--eye); }
+
+/* Ding Ding sits on the footer line, like on the Home counter */
+.about-peek {
+  position: relative;
+  width: min(190px, 50vw);
+  margin: 56px auto 0;
+  overflow: hidden;
+}
+
+.about-peek img,
+.about-peek video {
+  width: 100%;
+  animation: home-peek 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.15) 0.15s backwards;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 28px 16px 40px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.site-footer img { width: 48px; margin: 0 auto 6px; }
+.site-footer p { margin: 0; }
+.site-footer a { text-decoration: none; }
+.site-footer a:hover { color: var(--ink); }
+
+/* ---------- Larger screens ---------- */
+
+@media (min-width: 640px) {
+  :root { --gap: 6px; }
+  .quiz-text { font-size: 32px; }
+  .about-title { font-size: 60px; }
+  .about-links { gap: 72px; }
+  .home-logo img { width: 460px; }
+  .home-counter { width: 410px; margin-top: 40px; }
+  .home-peek { width: 330px; }
+  .home-doors { gap: 56px; margin-top: 26px; }
+  .page-home { padding-top: 52px; }
+  .quiz-answers { grid-template-columns: 1fr 1fr; max-width: 640px; }
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .logo img { width: 220px; }
+  .page-title { font-size: 42px; }
+  .lang-toggle { top: 24px; right: 24px; }
+}
+
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(6, 1fr); }
+  .site-nav { gap: 4px 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

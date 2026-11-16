@@ -1,0 +1,124 @@
+{
+  "questions": [
+    {
+      "question": {
+        "en": "A free Sunday morning. What do you do first?",
+        "ja": "予定のない日曜の朝。まずなにする？"
+      },
+      "answers": [
+        {
+          "text": { "en": "Make a big, slow breakfast", "ja": "ゆっくり朝ごはんを作る" },
+          "points": { "food": 2, "daily": 1 }
+        },
+        {
+          "text": { "en": "Put on my favourite song", "ja": "お気に入りの曲をかける" },
+          "points": { "music": 2 }
+        },
+        {
+          "text": { "en": "Pick today's outfit", "ja": "今日のコーデをえらぶ" },
+          "points": { "outfit": 2 }
+        },
+        {
+          "text": { "en": "Go back to sleep in a sunny spot", "ja": "ひなたで二度寝する" },
+          "points": { "daily": 2, "other": 1 }
+        }
+      ]
+    },
+    {
+      "question": {
+        "en": "A cardboard box appears! You…",
+        "ja": "目の前にダンボール箱が！どうする？"
+      },
+      "answers": [
+        {
+          "text": { "en": "Sit in it. Obviously.", "ja": "とりあえず入る。" },
+          "points": { "other": 2, "daily": 1 }
+        },
+        {
+          "text": { "en": "Turn it into a costume", "ja": "かぶって仮装する" },
+          "points": { "outfit": 2, "seasonal": 1 }
+        },
+        {
+          "text": { "en": "Hide inside, then jump out. Boo!", "ja": "中にかくれて…ばあっ！" },
+          "points": { "spooky": 2 }
+        },
+        {
+          "text": { "en": "Drum on it like a pro", "ja": "ドラムみたいにたたく" },
+          "points": { "music": 2 }
+        }
+      ]
+    },
+    {
+      "question": {
+        "en": "Pick a snack.",
+        "ja": "おやつ、どれにする？"
+      },
+      "answers": [
+        {
+          "text": { "en": "Something warm, with a little spice", "ja": "あったかくて、ちょっと辛いもの" },
+          "points": { "food": 2 }
+        },
+        {
+          "text": { "en": "Something sweet to share with someone", "ja": "だれかと分けっこできる甘いもの" },
+          "points": { "love": 2, "food": 1 }
+        },
+        {
+          "text": { "en": "The seasonal limited-edition one", "ja": "季節限定のやつ" },
+          "points": { "seasonal": 2, "food": 1 }
+        },
+        {
+          "text": { "en": "The mysterious thing at the back of the fridge", "ja": "冷蔵庫のおくの、なぞの何か" },
+          "points": { "spooky": 2, "other": 1 }
+        }
+      ]
+    },
+    {
+      "question": {
+        "en": "Your favourite kind of day?",
+        "ja": "いちばん好きな日は？"
+      },
+      "answers": [
+        {
+          "text": { "en": "Cherry blossoms and festivals", "ja": "お花見やおまつりの日" },
+          "points": { "seasonal": 2 }
+        },
+        {
+          "text": { "en": "Halloween night", "ja": "ハロウィンの夜" },
+          "points": { "spooky": 2, "seasonal": 1 }
+        },
+        {
+          "text": { "en": "A day with no plans at all", "ja": "なんにも予定がない日" },
+          "points": { "daily": 2 }
+        },
+        {
+          "text": { "en": "Any day with my favourite person", "ja": "大好きな人といっしょの日" },
+          "points": { "love": 2 }
+        }
+      ]
+    },
+    {
+      "question": {
+        "en": "How do you say “I like you”?",
+        "ja": "「すき」って、どう伝える？"
+      },
+      "answers": [
+        {
+          "text": { "en": "A slow, sleepy blink", "ja": "ゆっくり、まばたきする" },
+          "points": { "love": 2, "other": 1 }
+        },
+        {
+          "text": { "en": "Sing them a song", "ja": "歌にして伝える" },
+          "points": { "music": 2 }
+        },
+        {
+          "text": { "en": "Knock their cup off the table", "ja": "コップをテーブルから落とす" },
+          "points": { "other": 2 }
+        },
+        {
+          "text": { "en": "Dress up and bring flowers", "ja": "おしゃれして花束をわたす" },
+          "points": { "outfit": 2, "love": 1 }
+        }
+      ]
+    }
+  ]
+}

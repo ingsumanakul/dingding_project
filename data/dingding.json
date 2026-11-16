@@ -48,12 +48,12 @@
     "id": "09",
     "name": {
       "en": "Bandana Bow",
-      "th": "น้องคาดโบ",
+      "th": "น้องคาดโบว์",
       "ja": "バンダナリボン"
     },
     "description": {
       "en": "A red bandana tied into a perfect bow.",
-      "th": "โบไม่แดง ไม่มีแรงเดิน",
+      "th": "โบว์ไม่แดง ไม่มีแรงเดิน",
       "ja": "赤いバンダナをきゅっとリボン結び。"
     },
     "category": "outfit",
@@ -84,7 +84,7 @@
     "description": {
       "en": "Sluuuurp..",
       "th": "ซู้ดดดด..",
-      "ja": "ずずっ.."
+      "ja": "ずずっ…"
     },
     "category": "food",
     "rarity": "common"
@@ -99,7 +99,7 @@
     "description": {
       "en": "Brrrrr...",
       "th": "บรึ๋ยยย...",
-      "ja": "ブルブル..."
+      "ja": "ブルブル…"
     },
     "category": "outfit",
     "rarity": "common"
@@ -113,7 +113,7 @@
     },
     "description": {
       "en": "Peeking out from behind a big \"DING DING\" sign.",
-      "th": "โผล่หน้ามาจากจ๊ะเอ๋ “DING DING”",
+      "th": "โผล่หน้ามาจ๊ะเอ๋ “DING DING”",
       "ja": "「DING DING」の看板からひょっこりごあいさつ。"
     },
     "category": "other",
@@ -384,7 +384,7 @@
     "description": {
       "en": "FLASH!",
       "th": "พรึ่บ!",
-      "ja": "パッ!"
+      "ja": "パッ！"
     },
     "category": "spooky",
     "rarity": "super-rare"
@@ -669,7 +669,7 @@
     "description": {
       "en": "Pumpkin head.",
       "th": "หัวฟักทองลูกโต",
-      "ja": "おおきなかぼちゃから。"
+      "ja": "かぼちゃあたま。"
     },
     "category": "seasonal",
     "rarity": "rare"
@@ -739,10 +739,10 @@
     "name": {
       "en": "Mugshot",
       "th": "รูปถ่ายผู้ต้องหา",
-      "ja": "逮捕写真"
+      "ja": "マグショット"
     },
     "description": {
-      "en": "Click! Click! Click! Your very own mugshot.",
+      "en": "Click! Click! Click!",
       "th": "แช๊ะ! แช๊ะ! แช๊ะ!",
       "ja": "パシャ！パシャ！パシャ！"
     },

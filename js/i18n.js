@@ -204,9 +204,11 @@ var THAI_KEEP = [
   'คอลเลกชัน', 'เนกไท', 'ซูเปอร์แรร์', 'ใบประกาศ',
   // Thai words and set phrases that read badly when split
   'หมากฝรั่ง', 'ไอติม', 'ตรุษจีน', 'ต้มยำกุ้ง', 'ไหมพรม', 'ขยิบตา', 'ตาปรือ', 'ตึกตัก',
-  'มนุษย์เงินเดือน', 'หั่นเต๋า', 'นักพูดท้อง', 'ผีนางรำ', 'ร่ายรำ', 'วิบวับ', 'คันโยก',
+  'มนุษย์เงินเดือน', 'หั่นเต๋า', 'นักพูดท้อง', 'นักพากย์เสียงหุ่น', 'บะหมี่กึ่ง', 'ผีนางรำ', 'ร่ายรำ', 'วิบวับ', 'คันโยก',
   'ขี้เล่น', 'สะโพก', 'ตะวันตก', 'ระยิบระยับ', 'แปลงร่าง', 'บางวัน', 'ทั้งวัน', 'คู่กาย',
-  'ฝ่ายเดียว', 'จดหมายรัก', 'คนหม้อ', 'ริมทะเล', 'ชูฟ้า', 'สักคำ', 'สุดเก๋', 'ใบใหญ่', 'ตัวลับ'
+  'ฝ่ายเดียว', 'จดหมายรัก', 'คนหม้อ', 'ริมทะเล', 'ชูฟ้า', 'สักคำ', 'สุดเก๋', 'ใบใหญ่', 'วันนี้', 'สามลูก',
+  // sound words
+  'ก็องก็อย', 'แต่นแต๊น', 'ซู้ดดดด', 'บรึ๋ยยย', 'ตัวลับ'
 ];
 
 // Thai uses the Mali font. It is only downloaded the first time Thai is shown.
@@ -230,10 +232,21 @@ var I18n = {
   // Keep the THAI_KEEP words together in a Thai text.
   // The joiner goes before each letter, never before a vowel or tone mark
   // that sits above/below a letter (those must stay attached to it).
+  // Where a kept word touches another Thai word, an invisible ZERO WIDTH SPACE
+  // marks the boundary; without it the browser can cut the NEXT word wrongly
+  // (for example "กรึ่มๆ" right after "มนุษย์เงินเดือน").
   keepThaiWords: function (text) {
+    var thaiEnd = /[\u0E01-\u0E4E]$/;            // a Thai letter or mark
+    var thaiStart = /^[\u0E01-\u0E2E\u0E40-\u0E44]/; // a Thai letter or leading vowel
     THAI_KEEP.forEach(function (word) {
       var glued = word.charAt(0) + word.slice(1).replace(/[^\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g, '\u2060$&');
-      text = text.split(word).join(glued);
+      var parts = text.split(word);
+      text = parts[0];
+      for (var i = 1; i < parts.length; i++) {
+        var before = thaiEnd.test(text) ? '\u200B' : '';
+        var after = thaiStart.test(parts[i]) ? '\u200B' : '';
+        text += before + glued + after + parts[i];
+      }
     });
     return text;
   },

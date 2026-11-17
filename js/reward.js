@@ -266,7 +266,7 @@ var Reward = {
       canvas.width = W;
       canvas.height = H;
       var ctx = canvas.getContext('2d');
-      ctx.textAlign = 'center';
+      ctx.textAlign = 'left';   // lines are centred by I18n.fillCentered
       ctx.textBaseline = 'alphabetic';
 
       // paper and a thin gold frame inside the safe area
@@ -280,7 +280,7 @@ var Reward = {
       // title, with sparkles
       ctx.fillStyle = INK;
       fit(ctx, HEAD, 76, title, 760, 40);
-      ctx.fillText(title, W / 2, SAFE_TOP + 125);
+      I18n.fillCentered(ctx, title, W / 2, SAFE_TOP + 125);
       var tw = ctx.measureText(title).width;
       ctx.fillStyle = GOLD;
       sparkle(ctx, W / 2 - tw / 2 - 46, SAFE_TOP + 92, 20);
@@ -300,11 +300,11 @@ var Reward = {
       if (name) {
         ctx.fillStyle = INK;
         fit(ctx, HEAD, 70, name, 820, 36);
-        ctx.fillText(name, W / 2, nameY);
+        I18n.fillCentered(ctx, name, W / 2, nameY);
       }
       ctx.fillStyle = MUTED;
       ctx.font = font(BODY, thai ? 32 : 34);
-      ctx.fillText(date, W / 2, name ? nameY + 62 : nameY - 20);
+      I18n.fillCentered(ctx, date, W / 2, name ? nameY + 62 : nameY - 20);
 
       // all the pieces: 17 x 4 little tiles (68)
       var cols = 17, cell = 48, gap = 4;
@@ -342,12 +342,12 @@ var Reward = {
       // count under the grid
       ctx.fillStyle = INK;
       ctx.font = font(LATIN, 30);
-      ctx.fillText(thumbs.length + ' / ' + thumbs.length, W / 2, gridBottom + 56);
+      I18n.fillCentered(ctx, thumbs.length + ' / ' + thumbs.length, W / 2, gridBottom + 56);
 
       // footer at the bottom of the safe area
       ctx.fillStyle = MUTED;
       ctx.font = font(LATIN, 28);
-      ctx.fillText(footer, W / 2, SAFE_BOTTOM - 52);
+      I18n.fillCentered(ctx, footer, W / 2, SAFE_BOTTOM - 52);
 
       return canvas;
     });

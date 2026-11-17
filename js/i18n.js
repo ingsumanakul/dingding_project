@@ -302,6 +302,17 @@ var I18n = {
     return String(text).replace(/[\u2060\u200B]/g, '');
   },
 
+  // Draw one line of text centred on x, on a <canvas>.
+  // Safari (iPhone) ignores textAlign = 'center' for Thai text: each line
+  // started at x instead of being centred on it. So the line is measured and
+  // drawn left-aligned from x - width / 2, the same in every browser.
+  fillCentered: function (ctx, text, x, y) {
+    text = this.plain(text);
+    ctx.direction = 'ltr';
+    ctx.textAlign = 'left';
+    ctx.fillText(text, x - ctx.measureText(text).width / 2, y);
+  },
+
   // Wait until the fonts are really ready for drawing on a <canvas>.
   // fonts = [[cssFont, sampleText], ...], e.g. ['600 40px "Mali"', 'ดิงดิง'].
   // A canvas does not wait for web fonts, so without this the first card can

@@ -356,7 +356,7 @@ var Quiz = {
         ctx.font = font(HEAD, size);
         size -= 4;
       } while (ctx.measureText(name).width > maxWidth && size > 40);
-      ctx.fillText(name, x, y);
+      I18n.fillCentered(ctx, name, x, y);
     }
     // category tag (black pill), centred on x; y = top of the pill
     function drawTag(ctx, x, y) {
@@ -366,7 +366,7 @@ var Quiz = {
       ctx.fillStyle = '#1f1f1f';
       ctx.fill();
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(cat, x, y + 41);
+      I18n.fillCentered(ctx, cat, x, y + 41);
     }
     // The signature at the bottom, top to bottom: the DING DING logo, the quiz
     // link in a black pill (white letters), then the Instagram handles, small.
@@ -387,12 +387,12 @@ var Quiz = {
       ctx.fill();
       ctx.fillStyle = '#ffffff';
       ctx.textBaseline = 'middle';
-      ctx.fillText(PLAY_URL, x, pillY + pillH / 2 + 1);
+      I18n.fillCentered(ctx, PLAY_URL, x, pillY + pillH / 2 + 1);
       ctx.textBaseline = 'alphabetic';
 
       ctx.fillStyle = '#9a9a9a';
       ctx.font = font(LATIN, handleSize);
-      ctx.fillText(HANDLE, x, handleY);
+      I18n.fillCentered(ctx, HANDLE, x, handleY);
     }
 
     function drawStory(art, logo) {
@@ -400,7 +400,7 @@ var Quiz = {
       canvas.width = W;
       canvas.height = H;
       var ctx = canvas.getContext('2d');
-      ctx.textAlign = 'center';
+      ctx.textAlign = 'left';   // lines are centred by I18n.fillCentered
       ctx.textBaseline = 'alphabetic';
 
       // paper
@@ -410,7 +410,7 @@ var Quiz = {
       // "You are…"
       ctx.fillStyle = '#8c8c8c';
       ctx.font = font(HEAD, 44);
-      ctx.fillText(you, W / 2, TOP + 118);
+      I18n.fillCentered(ctx, you, W / 2, TOP + 118);
 
       // artwork, with rounded corners
       var size = 640, x = (W - size) / 2, y = TOP + 170;
@@ -429,7 +429,7 @@ var Quiz = {
       ctx.fillStyle = '#333333';
       ctx.font = font(BODY, thai ? 36 : 40);
       clampLines(ctx, wrap(ctx, desc, W - 200), W - 200).forEach(function (line, i) {
-        ctx.fillText(line, W / 2, below + (thai ? 278 : 276) + i * (thai ? 54 : 58));
+        I18n.fillCentered(ctx, line, W / 2, below + (thai ? 278 : 276) + i * (thai ? 54 : 58));
       });
 
       // logo, link and handles at the bottom of the safe area

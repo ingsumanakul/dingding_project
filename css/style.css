@@ -1250,7 +1250,8 @@ body[data-page="about"] .report-bug { display: block; }
   -webkit-user-select: auto;
   user-select: auto;
 }
-.save-view-text { margin: 0; font-family: var(--font-head); font-weight: var(--head-weight); font-size: 16px; }
+.save-view-text, .save-view-img { -webkit-user-select: none; user-select: none; }
+.save-view-text { max-width: 340px; margin: 0; font-family: var(--font-head); font-weight: var(--head-weight); font-size: 16px; }
 .save-view-close {
   position: absolute;
   top: 10px;

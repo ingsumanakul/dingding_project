@@ -51,7 +51,17 @@ var Reward = {
 
   // The day it was completed, "YYYY-MM-DD" (local time), or null.
   completedOn: function () {
-    return Store.get(KEYS.completed, null);
+    return this.handoffDate || Store.get(KEYS.completed, null);
+  },
+  handoffDate: null,   // date from a certificate opened in Chrome (app.js handoff)
+
+  // Opened from an in-app browser with "Open in Chrome": show the same
+  // certificate here (name + date come with the link; the collection itself
+  // stays in the other browser).
+  openFromHandoff: function (name, date) {
+    this.handoffDate = date;
+    Store.set(KEYS.player, name);
+    this.openCertificate();
   },
 
   // Call after something is unlocked. Saves the date the first time the
@@ -189,12 +199,13 @@ var Reward = {
 
   save: function () {
     var ready = this.cert && this.cert.key === this.key() && this.cert.file;
+    var handoff = { go: 'cert', p: Store.get(KEYS.player, '') || '', d: this.completedOn() || '' };
     // Ready: save/share during the tap (needed on iOS).
     if (ready) {
-      Share.save(ready);
+      Share.save(ready, handoff);
       return;
     }
-    this.prepare().then(function (file) { Share.save(file); }, function (err) { Share.failed(err); });
+    this.prepare().then(function (file) { Share.save(file, handoff); }, function (err) { Share.failed(err); });
   },
 
   // Returns a Promise for a 1080 x 1920 canvas (Instagram Story size), with

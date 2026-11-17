@@ -66,6 +66,35 @@ function rerenderText() {
   }
 }
 
+// "Open in Chrome to save" (js/share.js) opens this page with a handoff in the
+// query: ?go=quiz&r=039&lang=th, or ?go=cert&p=<name>&d=YYYY-MM-DD&lang=th.
+// The query is read once, then removed from the address bar.
+var HANDOFF = (function () {
+  try {
+    var q = new URLSearchParams(location.search);
+    if (!q.get('go')) return null;
+    if (LANGS.indexOf(q.get('lang')) !== -1) Store.set(KEYS.lang, q.get('lang'));
+    var page = q.get('go') === 'cert' ? 'collection' : 'quiz';
+    history.replaceState(null, '', location.pathname + '#' + page);
+    return { go: q.get('go'), r: q.get('r'), p: (q.get('p') || '').slice(0, 24), d: q.get('d') };
+  } catch (e) {
+    return null;
+  }
+})();
+
+// Show the card from the handoff, once the data is loaded.
+function openHandoff() {
+  if (!HANDOFF) return;
+  var h = HANDOFF;
+  HANDOFF = null;
+  if (h.go === 'quiz' && DATA.some(function (it) { return it.id === h.r && it.rarity !== 'secret'; })) {
+    Store.set(KEYS.quiz, h.r);
+    Quiz.showLast();
+  } else if (h.go === 'cert' && /^\d{4}-\d{2}-\d{2}$/.test(h.d || '')) {
+    Reward.openFromHandoff(h.p, h.d);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   I18n.init();
   I18n.apply();
@@ -94,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // The quiz questions are a separate file; the rest of the site works without it.
       return fetch('data/quiz.json')
         .then(function (res) { return res.json(); })
-        .then(function (quiz) { Quiz.init(items, I18n.glueThai(quiz)); });
+        .then(function (quiz) { Quiz.init(items, I18n.glueThai(quiz)); openHandoff(); });
     })
     .catch(function (err) {
       console.error('Could not load the data files', err);

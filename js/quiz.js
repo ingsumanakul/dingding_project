@@ -207,12 +207,13 @@ var Quiz = {
     var key = item.id + '-' + I18n.lang;
     var ready = this.card && this.card.key === key && this.card.file;
     // Card already made: save/share straight away, during the tap.
+    var handoff = { go: 'quiz', r: item.id };   // for "Open in Chrome" (js/share.js)
     if (ready) {
-      Share.save(ready);
+      Share.save(ready, handoff);
       return;
     }
     this.prepareCard(item).then(function (file) {
-      Share.save(file);
+      Share.save(file, handoff);
     }).catch(function (err) {
       Share.failed(err);
     });

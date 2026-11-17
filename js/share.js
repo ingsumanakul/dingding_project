@@ -3,13 +3,40 @@
 // Every tap on "Save" ends in one of three ways, never in nothing:
 //   1. the share sheet ("Save Image", Instagram…): phones that can share files;
 //   2. a download of the PNG: desktop, or when sharing is not possible or fails;
-//   3. the card shown full screen with "Press and hold the image to save":
-//      in-app browsers (Instagram, Facebook, LINE), which usually block both
-//      sharing files and downloads, or when the other two can't run.
+//   3. the card shown full screen: in-app browsers (Instagram, Facebook,
+//      LINE, TikTok), which block sharing files and downloads, or when the
+//      other two can't run. On iPhone: "Press and hold the image to save".
+//      On Android the in-app browsers can't save an image at all, so there
+//      is an "Open in Chrome to save" button instead: it opens this page in
+//      Chrome with the card to show (handoff, see app.js), and Chrome saves it.
 var Share = {
-  // Instagram / Facebook / LINE open links in their own little browser.
+  // Instagram / Facebook / LINE / TikTok open links in their own little browser.
   isInApp: function () {
-    return /Instagram|FBAN|FBAV|FB_IAB|Line\//i.test(navigator.userAgent || '');
+    return /Instagram|FBAN|FBAV|FB_IAB|Line\/|BytedanceWebview|musical_ly/i.test(navigator.userAgent || '');
+  },
+  isAndroid: function () {
+    return /Android/i.test(navigator.userAgent || '');
+  },
+  isLine: function () {
+    return /Line\//i.test(navigator.userAgent || '');
+  },
+
+  // A link that opens this page outside the in-app browser, with the
+  // handoff (e.g. { go: 'quiz', r: '039' }) and the language in the query.
+  // Returns null where there is no reliable way out (iPhone).
+  outsideUrl: function (handoff) {
+    var params = new URLSearchParams(handoff || {});
+    params.set('lang', I18n.lang);
+    var page = location.origin + location.pathname;
+    if (this.isLine()) {
+      params.set('openExternalBrowser', '1');   // LINE's own switch
+      return page + '?' + params.toString();
+    }
+    if (!this.isAndroid()) return null;
+    var https = page + '?' + params.toString();
+    return 'intent://' + location.host + location.pathname + '?' + params.toString() +
+      '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' +
+      encodeURIComponent(https) + ';end';
   },
 
   // Can this browser share this file (or, without a file, a PNG at all)?
@@ -36,8 +63,9 @@ var Share = {
 
   // Call it straight from the tap with a file that is already made:
   // iOS only opens the share sheet during the tap.
-  save: function (file) {
-    if (this.isInApp()) this.showImage(file);
+  // handoff: what to show when the page is opened in Chrome instead (see outsideUrl).
+  save: function (file, handoff) {
+    if (this.isInApp()) this.showImage(file, handoff);
     else if (this.canShareFiles(file)) this.share(file);
     else this.download(file);
   },
@@ -73,16 +101,24 @@ var Share = {
   // Full-screen view of the card; the user saves it with a long press.
   // A data: URL (not a blob: URL), so the phone's "Save image" can read it.
   // Without a file (the card could not be made), it says so instead.
-  showImage: function (file) {
+  showImage: function (file, handoff) {
     var view = document.getElementById('save-view');
     var img = document.getElementById('save-view-img');
     var text = document.getElementById('save-view-text');
+    var outside = document.getElementById('save-view-open');
     function open() {
       if (view.open) return;
       if (view.showModal) view.showModal(); else view.setAttribute('open', '');
     }
+    // Android in-app browser: long press can't save, so offer Chrome instead.
+    var url = file && handoff && this.isInApp() && this.isAndroid() ? this.outsideUrl(handoff) : null;
+    outside.hidden = !url;
+    if (url) {
+      outside.href = url;
+      outside.textContent = I18n.t(this.isLine() ? 'save.openBrowser' : 'save.openChrome');
+    }
     img.hidden = !file;
-    text.textContent = I18n.t(file ? 'save.hold' : 'save.failed');
+    text.textContent = I18n.t(!file ? 'save.failed' : url ? 'save.cantHere' : 'save.hold');
     if (!file) { img.removeAttribute('src'); open(); return; }
     var reader = new FileReader();
     reader.onload = function () { img.src = reader.result; open(); };

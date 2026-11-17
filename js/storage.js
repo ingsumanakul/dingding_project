@@ -26,5 +26,6 @@ var KEYS = {
   quiz: 'dd.quiz',              // id of the last quiz result
   completed: 'dd.completed',    // "YYYY-MM-DD": the day every DING DING was collected
   player: 'dd.player',          // the name on the certificate
-  inappBanner: 'dd.inappBanner' // true once the "open in your browser" banner was closed
+  inappBanner: 'dd.inappBanner', // true once the "open in your browser" banner was closed
+  secretWait: 'dd.secretWait'   // spins so far with only the Secret missing (js/gacha.js)
 };

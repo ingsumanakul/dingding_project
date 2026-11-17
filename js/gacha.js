@@ -15,6 +15,12 @@ var ODDS = [
 // as one already collected. Repeats still happen, just less often.
 var NEW_WEIGHT = 10;
 
+// Catch-up for the Secret: once the player has all the other pieces, the
+// Secret chance goes up from ODDS (2%) to CATCHUP.chance (10%) per spin, and
+// if it still hasn't come after CATCHUP.guarantee spins, the next spin is
+// the Secret for sure. The spins are counted in localStorage (KEYS.secretWait).
+var CATCHUP = { chance: 10, guarantee: 30 };
+
 var Gacha = {
   items: [],
   current: null,     // the Ding Ding shown in the reveal
@@ -44,14 +50,33 @@ var Gacha = {
     return Array.isArray(ids) ? ids : [];
   },
 
+  // Is the Secret the only piece still missing?
+  onlySecretLeft: function () {
+    var have = this.unlocked();
+    var missing = this.items.filter(function (it) { return have.indexOf(it.id) === -1; });
+    return missing.length === 1 && missing[0].rarity === 'secret';
+  },
+
   // Step 1: the tier, by the chances in ODDS.
+  // Only the Secret missing: the Secret gets CATCHUP.chance (the other tiers
+  // share the rest, in the same proportions), and after CATCHUP.guarantee
+  // spins without it, the next spin is the Secret.
   pickRarity: function () {
-    var roll = Math.random() * 100;
-    for (var i = 0; i < ODDS.length; i++) {
-      roll -= ODDS[i].chance;
-      if (roll < 0) return ODDS[i].rarity;
+    var odds = ODDS;
+    if (this.onlySecretLeft()) {
+      if (Store.get(KEYS.secretWait, 0) >= CATCHUP.guarantee) return 'secret';
+      var others = ODDS.filter(function (o) { return o.rarity !== 'secret'; });
+      var othersTotal = others.reduce(function (sum, o) { return sum + o.chance; }, 0);
+      odds = others.map(function (o) {
+        return { rarity: o.rarity, chance: o.chance * (100 - CATCHUP.chance) / othersTotal };
+      }).concat({ rarity: 'secret', chance: CATCHUP.chance });
     }
-    return ODDS[0].rarity;
+    var roll = Math.random() * 100;
+    for (var i = 0; i < odds.length; i++) {
+      roll -= odds[i].chance;
+      if (roll < 0) return odds[i].rarity;
+    }
+    return odds[0].rarity;
   },
 
   // Step 2: one Ding Ding from that tier. Repeats are allowed, but one not
@@ -78,8 +103,11 @@ var Gacha = {
     this.busy = true;
     var self = this;
 
+    var waiting = this.onlySecretLeft();
     var item = this.pick();
     var have = this.unlocked();
+    // count the spins that missed the Secret while it was the only one left
+    if (waiting) Store.set(KEYS.secretWait, item.rarity === 'secret' ? 0 : Store.get(KEYS.secretWait, 0) + 1);
     this.current = item;
     this.currentIsNew = have.indexOf(item.id) === -1;
 

@@ -32,8 +32,9 @@ ding_ding_project/
 - Must work on GitHub Pages: use **relative paths only**.
 - Single page with hash navigation: `#home`, `#collection`, `#gacha`, `#quiz`, `#about`.
 - Mobile-first and responsive. Test at 375px and 1280px widths.
-- Show the still by default (WebP copies from `thumbs/`) and load the animation (`video/`) only on hover/tap, so the page stays light. Use `<video autoplay loop muted playsinline>` with the still as poster; if the video fails, the still stays. No GIFs on the site.
+- Show the still by default (WebP copies from `thumbs/`) and load the animation (`video/`) only on hover/tap, so the page stays light. Use `<video autoplay loop muted playsinline>` with the still as poster; if the video fails, the still stays. `js/motion.js` also restarts a video on `ended` (some iPhones ignore `loop`), and if `play()` is blocked (e.g. Low Power Mode) it shows the still with a small round play button. No GIFs on the site.
 - After adding or changing artwork, rerun `tools/make_thumbs.py` and `tools/make_videos.py <folder with the GIFs>`.
+- Saving a card (quiz result, certificate) goes through `js/share.js` and must never fail silently: the share sheet when `navigator.canShare({ files })` is true, else a download (`<a download>`), and if that can't run (or the card can't be made) a full-screen view of the card with "Press and hold the image to save". In in-app browsers (Instagram, Facebook, LINE: `Share.isInApp()`), it goes straight to the full-screen view, and a small dismissible banner at the top says "For the best experience, open in your browser" (closed once = closed for good, `dd.inappBanner`).
 - Save progress in `localStorage`. Wrap every read/write in `try/catch` and keep the site working if storage is unavailable.
 
 ## Languages
@@ -44,7 +45,7 @@ ding_ding_project/
 - The name: **DING DING** (all caps) in English, ดิงดิง in Thai, ディンディン in Japanese. The link group titles and the footer stay in English in every language.
 - Thai and Japanese should sound natural, playful and cute, not like a literal translation. In Thai, never use gendered particles or pronouns for DING DING (no ครับ/ค่ะ, no เขา/เธอ for DING DING).
 - Every text needs all three languages: UI text in `js/i18n.js`, names and descriptions in `data/dingding.json`, questions and answers in `data/quiz.json`.
-- Thai line breaking: Thai has no spaces between words, and the browser's dictionary does not know some words (our name, loanwords like ทาโกะยากิ), so it can cut them in half. Words in `THAI_KEEP` in `js/i18n.js` are kept together automatically (invisible word joiners are added when the text loads; the JSON stays plain). If a Thai word breaks badly, add it there. Thai paragraphs use `text-wrap: balance`, so no short word is left alone on a line.
+- Thai line breaking: Thai has no spaces between words, and the browser's dictionary does not know some words (our name, loanwords like ทาโกะยากิ), so it can cut them in half. Words in `THAI_KEEP` in `js/i18n.js` are kept together automatically (invisible word joiners are added when the text loads; the JSON stays plain). If a Thai word breaks badly, add it there. The joiners must never reach a `<canvas>`: use `I18n.plain()` for any drawn text, and `I18n.fontsReady()` to wait for the fonts before drawing (quiz card, certificate). Thai paragraphs use `text-wrap: balance`, so no short word is left alone on a line.
 
 ## Fonts (Google Fonts, SIL OFL 1.1)
 
@@ -110,6 +111,7 @@ One entry per character:
    - A certificate, a 1080×1920 Instagram Story PNG with the same safe area as the quiz card: the winner picture, "DING DING MASTER" / 「ディンディンマスター」 / "นักสะสมดิงดิง", the player's name (typed in the certificate popup, remembered in `dd.player`), the completion date, a 17×4 grid of all 68 pieces, and "© DING DING THE CAT by INGINGE DESIGN". It uses the same save/share button as the quiz (`js/share.js`).
    - After completion, the Collection shows a COMPLETE! badge next to the progress and a "Certificate" button to open it again anytime.
 5. **Quiz**: "Which DING DING are you?" About 5 questions, the result is one character (never the Secret), with a button to save the result as a PNG story card (white, 1080×1920, inside the 250px safe area, with the DING DING logo and "@dingding.thecat by @inginge.design" and the quiz link "ingsumanakul.github.io/dingding_project/#quiz" at the bottom). People post this card in Instagram "Add Yours".
+   - Opening or leaving the Quiz page always goes back to the start screen (half-done answers are dropped). If a result was saved before, the start screen shows a small "See my last result" / 「前回の結果を見る」 / "ดูผลครั้งที่แล้ว" link that opens it.
 6. **About**: big handwritten "Hello!" / "こんにちは！", short centred text about DING DING and the artist, two small groups of text links ("DING DING THE CAT": Instagram, Facebook; "INGINGE DESIGN": Instagram, Facebook, Linktree) opening in a new tab, and DING DING peeking up from the footer line. No X/Twitter links anywhere. Footer (all languages): "© DING DING THE CAT by INGINGE DESIGN".
    - On the About page only, the footer also has a small "Found a bug? Tell us" / "เจอ bug? แจ้งเราได้เลย" / 「バグを見つけたら教えてね」 link (`js/bug.js`). The site has no server, so it opens the @dingding.thecat Instagram DM (`ig.me/m/dingding.thecat`) and first copies a short report (the page they came from, language, collected count, screen size, browser, time) for them to paste. In Thai, "bug" stays in English.
 

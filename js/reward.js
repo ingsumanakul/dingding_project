@@ -194,7 +194,7 @@ var Reward = {
       Share.save(ready);
       return;
     }
-    this.prepare().then(function (file) { Share.save(file); });
+    this.prepare().then(function (file) { Share.save(file); }, function (err) { Share.failed(err); });
   },
 
   // Returns a Promise for a 1080 x 1920 canvas (Instagram Story size), with
@@ -211,8 +211,9 @@ var Reward = {
     function font(family, size) { return family.replace('{size}', size + 'px'); }
     var INK = '#1f1f1f', GOLD = '#e6bd3f', MUTED = '#8c8c8c', TILE = '#f2f2f0';
 
-    var title = I18n.t('reward.title');
-    var date = I18n.t('reward.date', { date: this.formatDate(this.completedOn()) });
+    // plain text for the canvas: no invisible Thai joiners (see I18n.plain)
+    var title = I18n.plain(I18n.t('reward.title'));
+    var date = I18n.plain(I18n.t('reward.date', { date: this.formatDate(this.completedOn()) }));
     var footer = '© DING DING THE CAT by INGINGE DESIGN';
 
     function loadImage(src) {
@@ -223,13 +224,13 @@ var Reward = {
         im.src = src;
       });
     }
+    // wait for every font used on the certificate
     function loadFonts() {
-      if (!document.fonts || !document.fonts.load) return Promise.resolve();
-      return Promise.all([
-        document.fonts.load(font(HEAD, 40), title + name),
-        document.fonts.load(font(BODY, 40), date),
-        document.fonts.load(font(LATIN, 40), footer + name)
-      ]).catch(function () {});
+      return I18n.fontsReady([
+        [font(HEAD, 40), title + name],
+        [font(BODY, 40), date],
+        [font(LATIN, 40), footer + name]
+      ]);
     }
     function roundedRect(ctx, x, y, w, h, r) {
       ctx.beginPath();

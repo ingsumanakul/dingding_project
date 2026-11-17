@@ -40,6 +40,11 @@ var STRINGS = {
     'quiz.title': 'Which DING DING are you?',
     'quiz.lead': 'Five little questions to find your DING DING.',
     'quiz.start': 'Start',
+    'quiz.last': 'See my last result',
+    'save.hold': 'Press and hold the image to save',
+    'save.failed': 'Sorry, the image could not be made. Please try again.',
+    'inapp.title': 'For the best experience, open in your browser',
+    'inapp.how': 'Tap ⋯ or ⋮ at the top → Open in browser',
     'quiz.back': '← Back',
     'quiz.you': 'You are…',
     'quiz.save': 'Save as image',
@@ -105,6 +110,11 @@ var STRINGS = {
     'quiz.title': 'あなたはどのディンディン？',
     'quiz.lead': '5つの質問で、あなたにぴったりのディンディンを見つけよう。',
     'quiz.start': 'はじめる',
+    'quiz.last': '前回の結果を見る',
+    'save.hold': '画像を長押しして保存してね',
+    'save.failed': 'ごめんね、画像を作れなかったよ。もう一回ためしてみてね。',
+    'inapp.title': 'ブラウザで開くと、もっと快適に遊べるよ',
+    'inapp.how': '上の ⋯ か ⋮ →「ブラウザで開く」',
     'quiz.back': '← もどる',
     'quiz.you': 'あなたは…',
     'quiz.save': '画像を保存',
@@ -170,6 +180,11 @@ var STRINGS = {
     'quiz.title': 'คุณคือดิงดิงตัวไหน?',
     'quiz.lead': 'ตอบคำถามสั้นๆ 5 ข้อ แล้วมาดูกันว่าดิงดิงตัวไหนคือคุณ',
     'quiz.start': 'เริ่มเลย',
+    'quiz.last': 'ดูผลครั้งที่แล้ว',
+    'save.hold': 'กดค้างที่รูปเพื่อบันทึก',
+    'save.failed': 'ขอโทษนะ ทำรูปไม่สำเร็จ ลองกดใหม่อีกครั้งนะ',
+    'inapp.title': 'เปิดในเบราว์เซอร์จะเล่นได้ลื่นกว่านะ',
+    'inapp.how': 'แตะ ⋯ หรือ ⋮ ด้านบน → เปิดในเบราว์เซอร์',
     'quiz.back': '← ย้อนกลับ',
     'quiz.you': 'คุณคือ…',
     'quiz.save': 'บันทึกรูป',
@@ -278,6 +293,48 @@ var I18n = {
       });
     }
     return obj;
+  },
+
+  // The same text without the invisible joiners added by keepThaiWords.
+  // Use it for anything drawn on a <canvas>: the joiners are only for HTML
+  // line breaking, and Safari splits the Thai letters (and the font) at them.
+  plain: function (text) {
+    return String(text).replace(/[\u2060\u200B]/g, '');
+  },
+
+  // Wait until the fonts are really ready for drawing on a <canvas>.
+  // fonts = [[cssFont, sampleText], ...], e.g. ['600 40px "Mali"', 'ดิงดิง'].
+  // A canvas does not wait for web fonts, so without this the first card can
+  // come out in a fallback font. In Thai the Mali stylesheet is added late
+  // (loadThaiFont), so first wait for that stylesheet itself.
+  fontsReady: function (fonts) {
+    if (!document.fonts || !document.fonts.load) return Promise.resolve();
+    function sheetLoaded() {
+      var link = document.getElementById('font-th');
+      if (!link || link.sheet) return Promise.resolve();
+      return new Promise(function (ok) {
+        link.addEventListener('load', ok);
+        link.addEventListener('error', ok);
+      });
+    }
+    function loadAll() {
+      return Promise.all(fonts.map(function (f) {
+        return document.fonts.load(f[0], f[1]).catch(function () {});
+      }));
+    }
+    function allThere() {
+      return fonts.every(function (f) {
+        try { return document.fonts.check(f[0], f[1]); } catch (e) { return true; }
+      });
+    }
+    var ready = sheetLoaded().then(loadAll).then(function () {
+      if (allThere()) return;
+      // not there yet (slow network): try once more a little later
+      return new Promise(function (ok) { setTimeout(ok, 400); }).then(loadAll);
+    }).then(function () { return document.fonts.ready; });
+    // never wait forever: after 6 s draw with whatever is there
+    var timeout = new Promise(function (ok) { setTimeout(ok, 6000); });
+    return Promise.race([ready, timeout]);
   },
 
   loadThaiFont: function () {

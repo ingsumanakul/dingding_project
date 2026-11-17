@@ -15,6 +15,15 @@
 </head>
 <body>
 
+  <!-- Only inside Instagram / Facebook / LINE (js/share.js) -->
+  <div class="inapp-banner" id="inapp-banner" role="note" hidden>
+    <p>
+      <strong data-i18n="inapp.title">For the best experience, open in your browser</strong>
+      <span data-i18n="inapp.how">Tap ⋯ or ⋮ at the top → Open in browser</span>
+    </p>
+    <button type="button" class="inapp-close" id="inapp-close" aria-label="Close">×</button>
+  </div>
+
   <header class="site-header">
     <a class="logo" href="#home" aria-label="DING DING home">
       <img src="thumbs/logo-dingding.webp" alt="DING DING" width="480" height="92">
@@ -170,6 +179,8 @@
         <h1 class="page-title" data-i18n="quiz.title">Which DING DING are you?</h1>
         <p class="page-lead" data-i18n="quiz.lead">Five little questions to find your DING DING.</p>
         <p class="quiz-start"><button type="button" class="pill pill-big" id="quiz-start" data-i18n="quiz.start">Start</button></p>
+        <!-- only when the quiz was finished before (js/quiz.js) -->
+        <p class="quiz-last" id="quiz-last-wrap" hidden><button type="button" id="quiz-last" data-i18n="quiz.last">See my last result</button></p>
       </div>
 
       <!-- 2. one question per screen -->
@@ -271,6 +282,13 @@
     <input class="cert-input" id="cert-name" type="text" maxlength="24" autocomplete="name">
     <img class="cert-preview" id="cert-preview" alt="">
     <button type="button" class="pill" id="cert-save">Save as image</button>
+  </dialog>
+
+  <!-- Full-screen card to save with a long press (in-app browsers; js/share.js) -->
+  <dialog class="save-view" id="save-view">
+    <button type="button" class="save-view-close" id="save-view-close" aria-label="Close">×</button>
+    <img class="save-view-img" id="save-view-img" alt="">
+    <p class="save-view-text" id="save-view-text"></p>
   </dialog>
 
   <script src="js/storage.js"></script>

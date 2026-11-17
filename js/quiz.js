@@ -17,6 +17,7 @@ var Quiz = {
     var self = this;
 
     document.getElementById('quiz-start').addEventListener('click', function () { self.start(); });
+    document.getElementById('quiz-last').addEventListener('click', function () { self.showLast(); });
     document.getElementById('quiz-back').addEventListener('click', function () { self.back(); });
     document.getElementById('quiz-again').addEventListener('click', function () { self.start(); });
     var saveBtn = document.getElementById('quiz-save');
@@ -34,14 +35,32 @@ var Quiz = {
       }
     });
 
-    // Show the last result again when coming back to the site.
+    this.reset();
+  },
+
+  // The last finished result (saved in localStorage), or null.
+  lastResult: function () {
     var savedId = Store.get(KEYS.quiz, null);
-    var saved = items.filter(function (it) { return it.id === savedId; })[0];
-    if (saved) {
-      this.result = saved;
-      this.step = this.questions.length;
-    }
+    return this.items.filter(function (it) { return it.id === savedId; })[0] || null;
+  },
+
+  // Back to the start screen and forget any half-done answers.
+  // app.js calls this every time the Quiz page is opened or left.
+  reset: function () {
+    this.answers = [];
+    this.result = null;
+    this.step = -1;
     this.render();
+  },
+
+  // "See my last result": show the saved result card again.
+  showLast: function () {
+    var last = this.lastResult();
+    if (!last) return;
+    this.result = last;
+    this.step = this.questions.length;
+    this.render();
+    window.scrollTo(0, 0);
   },
 
   // ---- moving through the quiz ----------------------------------------
@@ -107,6 +126,7 @@ var Quiz = {
     document.getElementById('quiz-intro').hidden = !isIntro;
     document.getElementById('quiz-question').hidden = isIntro || isResult;
     document.getElementById('quiz-result').hidden = !isResult;
+    document.getElementById('quiz-last-wrap').hidden = !(isIntro && this.lastResult());
 
     if (isResult) this.renderResult();
     else if (!isIntro) this.renderQuestion();
@@ -194,7 +214,7 @@ var Quiz = {
     this.prepareCard(item).then(function (file) {
       Share.save(file);
     }).catch(function (err) {
-      console.error('Could not make the card image', err);
+      Share.failed(err);
     });
   },
 
@@ -210,10 +230,14 @@ var Quiz = {
     var HEAD = thai ? '600 {size} "Mali", sans-serif' : '{size} "Yusei Magic", sans-serif';
     var BODY = thai ? '{size} "Mali", sans-serif' : '{size} "Yomogi", sans-serif';
     function font(family, size) { return family.replace('{size}', size + 'px'); }
-    var name = item.name[lang];
+    // Drawn texts never contain the invisible Thai joiners (see I18n.plain).
+    // desc keeps them only for wrapping (so kept words stay whole), and every
+    // line is made plain before it is measured or drawn.
+    var name = I18n.plain(item.name[lang]);
     var desc = item.description[lang];
-    var you = I18n.t('quiz.you');
-    var cat = I18n.t('cat.' + item.category);
+    var you = I18n.plain(I18n.t('quiz.you'));
+    var cat = I18n.plain(I18n.t('cat.' + item.category));
+    var MAX_LINES = 3;
     var HANDLE = '@dingding.thecat by @inginge.design';
     // where to play, for people who see a shared card (a picture, so it can't be tapped)
     var PLAY_URL = 'ingsumanakul.github.io/dingding_project/#quiz';
@@ -227,14 +251,13 @@ var Quiz = {
         im.src = src;
       });
     }
-    // Make sure the web fonts (and the Japanese glyphs we need) are ready.
+    // Wait for every font used on the card (and the Japanese/Thai glyphs we need).
     function loadFonts() {
-      if (!document.fonts || !document.fonts.load) return Promise.resolve();
-      return Promise.all([
-        document.fonts.load(font(HEAD, 40), you + name + cat),
-        document.fonts.load(font(BODY, 40), desc),
-        document.fonts.load(font(LATIN, 40), HANDLE + PLAY_URL)
-      ]).catch(function () {});
+      return I18n.fontsReady([
+        [font(HEAD, 40), you + name + cat],
+        [font(BODY, 40), I18n.plain(desc)],
+        [font(LATIN, 40), HANDLE + PLAY_URL]
+      ]);
     }
     function roundedRect(ctx, x, y, w, h, r) {
       ctx.beginPath();
@@ -261,6 +284,7 @@ var Quiz = {
         }
         return lines;
       }
+      text = I18n.plain(text);
       var parts = text.indexOf(' ') !== -1 ? text.split(' ') : text.split('');
       var joiner = text.indexOf(' ') !== -1 ? ' ' : '';
       var lines = [];
@@ -291,7 +315,7 @@ var Quiz = {
         var line = lines[lines.length - 1];
         var prevWord = line[line.length - 1] || '';
         var stick = /^[\s!?…)”’.,\u2060]+$/.test(w) || /\u2060$/.test(prevWord);
-        if (line.length && !stick && ctx.measureText(line.join('') + w).width > maxWidth) {
+        if (line.length && !stick && ctx.measureText(I18n.plain(line.join('') + w)).width > maxWidth) {
           lines.push([w]);
         } else {
           line.push(w);
@@ -300,11 +324,20 @@ var Quiz = {
       // no lonely word: move words down until the last line is at least a third full
       var last = lines[lines.length - 1], prev = lines[lines.length - 2];
       while (prev && prev.length > 1 &&
-             ctx.measureText(last.join('')).width < maxWidth / 3 &&
-             ctx.measureText(prev[prev.length - 1] + last.join('')).width <= maxWidth) {
+             ctx.measureText(I18n.plain(last.join(''))).width < maxWidth / 3 &&
+             ctx.measureText(I18n.plain(prev[prev.length - 1] + last.join(''))).width <= maxWidth) {
         last.unshift(prev.pop());
       }
-      return lines.map(function (l) { return l.join('').trim(); }).filter(Boolean);
+      return lines.map(function (l) { return I18n.plain(l.join('')).trim(); }).filter(Boolean);
+    }
+    // At most MAX_LINES lines; if there is more, the last one ends with "…".
+    function clampLines(ctx, lines, maxWidth) {
+      if (lines.length <= MAX_LINES) return lines;
+      lines = lines.slice(0, MAX_LINES);
+      var last = lines[MAX_LINES - 1];
+      while (last && ctx.measureText(last + '…').width > maxWidth) last = last.slice(0, -1);
+      lines[MAX_LINES - 1] = last.trim() + '…';
+      return lines;
     }
 
     return Promise.all([
@@ -395,7 +428,7 @@ var Quiz = {
       // description
       ctx.fillStyle = '#333333';
       ctx.font = font(BODY, thai ? 36 : 40);
-      wrap(ctx, desc, W - 200).slice(0, 3).forEach(function (line, i) {
+      clampLines(ctx, wrap(ctx, desc, W - 200), W - 200).forEach(function (line, i) {
         ctx.fillText(line, W / 2, below + (thai ? 278 : 276) + i * (thai ? 54 : 58));
       });
 

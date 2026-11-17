@@ -387,6 +387,34 @@ video.motion {
 }
 .tile button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
+/* Small play button over the still, when the phone blocked the animation
+   (e.g. Low Power Mode). js/motion.js adds it. */
+.motion-play {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  animation: fade-in 0.4s ease;
+}
+.motion-play::before {   /* the triangle */
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -4px;
+  border-style: solid;
+  border-width: 8px 0 8px 13px;
+  border-color: transparent transparent transparent var(--ink);
+}
+.motion-play:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
 /* The Secret: the plain cat on white, sitting on the bottom edge (not cropped) */
 .tile.is-secret { background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
 .tile.is-secret img,
@@ -670,6 +698,21 @@ video.motion {
 
 .page-quiz { text-align: center; }
 .quiz-start { margin: 32px 0 0; }
+
+/* "See my last result": a small grey text link under Start */
+.quiz-last { margin: 18px 0 0; }
+.quiz-last button {
+  border: 0;
+  background: none;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.quiz-last button:hover { color: var(--ink); }
 
 .quiz-dots {
   display: flex;
@@ -1177,4 +1220,73 @@ body[data-page="about"] .report-bug { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Saving inside in-app browsers (js/share.js) ---------- */
+
+/* Full-screen card: press and hold the image to save it */
+.save-view {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 56px 16px 24px;
+  border: 0;
+  background: var(--tile);
+  color: var(--text);
+  text-align: center;
+}
+.save-view[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; animation: fade-in 0.3s ease; }
+.save-view::backdrop { background: var(--tile); }
+.save-view-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 160px);
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  -webkit-touch-callout: default;   /* keep the long-press menu ("Save image") on iOS */
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+.save-view-text { margin: 0; font-family: var(--font-head); font-weight: var(--head-weight); font-size: 16px; }
+.save-view-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* "Open in your browser" banner, only in in-app browsers */
+.inapp-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 16px;
+  background: var(--tile);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.inapp-banner[hidden] { display: none; }
+.inapp-banner p { flex: 1; margin: 0; text-align: center; }
+.inapp-banner strong { display: block; font-family: var(--font-head); font-weight: var(--head-weight); color: var(--ink); }
+.inapp-banner span { color: var(--muted); }
+.inapp-close {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
 }

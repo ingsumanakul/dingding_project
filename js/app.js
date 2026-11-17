@@ -33,8 +33,9 @@ function showPage() {
 
   if (!DATA.length) return;
   if (name === 'home') renderHomeHints();
-  // The quiz button depends on what is unlocked, so refresh it.
-  if (name === 'quiz') Quiz.render();
+  // Opening or leaving the Quiz always starts it over at the start screen
+  // (the last result stays one tap away: "See my last result").
+  Quiz.reset();
   // Coming back to the Gacha always starts at the machine.
   if (name === 'gacha') Gacha.showMachine();
   // "See in Collection" from the Gacha: open that Ding Ding's popup.
@@ -69,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
   I18n.init();
   I18n.apply();
   Bug.init();
+  Share.init();
 
   document.querySelectorAll('.lang-toggle button').forEach(function (btn) {
     btn.addEventListener('click', function () {

@@ -14,3 +14,5 @@ thumbs/sil-sheet.jpg
 # Local editor / tool settings
 .claude/settings.local.json
 .vscode/
+# Images for social media posts (made by tools/make_social.py), not part of the site
+social/

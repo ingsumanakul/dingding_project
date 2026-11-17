@@ -108,8 +108,9 @@ One entry per character:
    - The completion date is saved once, when it happens (`dd.completed`, "YYYY-MM-DD"). It is shown in the player's language (Thai uses the Buddhist year).
    - A certificate, a 1080×1920 Instagram Story PNG with the same safe area as the quiz card: the winner picture, "DING DING MASTER" / 「ディンディンマスター」 / "นักสะสมดิงดิง", the player's name (typed in the certificate popup, remembered in `dd.player`), the completion date, a 17×4 grid of all 68 pieces, and "© DING DING THE CAT by INGINGE DESIGN". It uses the same save/share button as the quiz (`js/share.js`).
    - After completion, the Collection shows a COMPLETE! badge next to the progress and a "Certificate" button to open it again anytime.
-5. **Quiz**: "Which DING DING are you?" About 5 questions, the result is one character (never the Secret), with a button to save the result as a PNG card.
+5. **Quiz**: "Which DING DING are you?" About 5 questions, the result is one character (never the Secret), with a button to save the result as a PNG story card (white, 1080×1920, inside the 250px safe area, with the DING DING logo and "@dingding.thecat by @inginge.design" at the bottom). People post this card in Instagram "Add Yours".
 6. **About**: big handwritten "Hello!" / "こんにちは！", short centred text about DING DING and the artist, two small groups of text links ("DING DING THE CAT": Instagram, Facebook; "INGINGE DESIGN": Instagram, Facebook, Linktree) opening in a new tab, and DING DING peeking up from the footer line. No X/Twitter links anywhere. Footer (all languages): "© DING DING THE CAT by INGINGE DESIGN".
+   - On the About page only, the footer also has a small "Found a bug? Tell us" / "เจอ bug? แจ้งเราได้เลย" / 「バグを見つけたら教えてね」 link (`js/bug.js`). The site has no server, so it opens the @dingding.thecat Instagram DM (`ig.me/m/dingding.thecat`) and first copies a short report (the page they came from, language, collected count, screen size, browser, time) for them to paste. In Thai, "bug" stays in English.
 
 ## Workflow
 

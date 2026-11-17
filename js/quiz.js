@@ -214,6 +214,8 @@ var Quiz = {
     var desc = item.description[lang];
     var you = I18n.t('quiz.you');
     var cat = I18n.t('cat.' + item.category);
+    var HANDLE = '@dingding.thecat by @inginge.design';
+    var LATIN = '{size} "Yusei Magic", sans-serif';   // the handle line, in every language
 
     function loadImage(src) {
       return new Promise(function (ok, fail) {
@@ -228,7 +230,8 @@ var Quiz = {
       if (!document.fonts || !document.fonts.load) return Promise.resolve();
       return Promise.all([
         document.fonts.load(font(HEAD, 40), you + name + cat),
-        document.fonts.load(font(BODY, 40), desc)
+        document.fonts.load(font(BODY, 40), desc),
+        document.fonts.load(font(LATIN, 40), HANDLE)
       ]).catch(function () {});
     }
     function roundedRect(ctx, x, y, w, h, r) {
@@ -308,6 +311,39 @@ var Quiz = {
       loadFonts()
     ]).then(function (loaded) {
       var art = loaded[0], logo = loaded[1];
+      return drawStory(art, logo);
+    });
+
+    // name: shrinks a little if it is very long
+    function drawName(ctx, size, maxWidth, x, y) {
+      ctx.fillStyle = '#1f1f1f';
+      do {
+        ctx.font = font(HEAD, size);
+        size -= 4;
+      } while (ctx.measureText(name).width > maxWidth && size > 40);
+      ctx.fillText(name, x, y);
+    }
+    // category tag (black pill), centred on x; y = top of the pill
+    function drawTag(ctx, x, y) {
+      ctx.font = font(HEAD, 34);
+      var tagW = ctx.measureText(cat).width + 64;
+      roundedRect(ctx, x - tagW / 2, y, tagW, 58, 29);
+      ctx.fillStyle = '#1f1f1f';
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(cat, x, y + 41);
+    }
+    // the DING DING logo with "@dingding.thecat by @inginge.design" under it;
+    // y = top of the logo
+    function drawSignature(ctx, logo, x, y, logoW, handleSize) {
+      var logoH = logoW * logo.height / logo.width;
+      ctx.drawImage(logo, x - logoW / 2, y, logoW, logoH);
+      ctx.fillStyle = '#8c8c8c';
+      ctx.font = font(LATIN, handleSize);
+      ctx.fillText(HANDLE, x, y + logoH + handleSize + 10);
+    }
+
+    function drawStory(art, logo) {
       var canvas = document.createElement('canvas');
       canvas.width = W;
       canvas.height = H;
@@ -325,44 +361,29 @@ var Quiz = {
       ctx.fillText(you, W / 2, TOP + 118);
 
       // artwork, with rounded corners
-      var size = 800, x = (W - size) / 2, y = TOP + 170;
+      var size = 740, x = (W - size) / 2, y = TOP + 170;
       ctx.save();
       roundedRect(ctx, x, y, size, size, 28);
       ctx.clip();
       ctx.drawImage(art, x, y, size, size);
       ctx.restore();
 
-      // name (shrinks a little if it is very long)
-      var nameSize = thai ? 76 : 84;   // Thai marks above and below need a little more room
-      ctx.fillStyle = '#1f1f1f';
-      do {
-        ctx.font = font(HEAD, nameSize);
-        nameSize -= 4;
-      } while (ctx.measureText(name).width > W - 120 && nameSize > 40);
-      ctx.fillText(name, W / 2, TOP + 1082);
-
-      // category tag (black pill)
-      ctx.font = font(HEAD, 34);
-      var tagW = ctx.measureText(cat).width + 64;
-      roundedRect(ctx, (W - tagW) / 2, TOP + 1116, tagW, 58, 29);
-      ctx.fillStyle = '#1f1f1f';
-      ctx.fill();
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(cat, W / 2, TOP + 1157);
+      var below = y + size;   // everything else is placed under the artwork
+      // Thai marks above and below need a little more room
+      drawName(ctx, thai ? 76 : 84, W - 120, W / 2, below + 112);
+      drawTag(ctx, W / 2, below + (thai ? 158 : 146));
 
       // description
       ctx.fillStyle = '#333333';
-      var descSize = thai ? 36 : 40;
-      ctx.font = font(BODY, descSize);
+      ctx.font = font(BODY, thai ? 36 : 40);
       wrap(ctx, desc, W - 200).slice(0, 3).forEach(function (line, i) {
-        ctx.fillText(line, W / 2, TOP + (thai ? 1236 : 1246) + i * (thai ? 54 : 58));
+        ctx.fillText(line, W / 2, below + (thai ? 278 : 276) + i * (thai ? 54 : 58));
       });
 
-      var logoW = 300, logoH = logoW * logo.height / logo.width;
-      // logo: at the bottom of the safe area
-      ctx.drawImage(logo, (W - logoW) / 2, SAFE_BOTTOM - logoH - 12, logoW, logoH);
-
+      // logo + handle at the bottom of the safe area
+      var logoW = 260, logoH = logoW * logo.height / logo.width;
+      drawSignature(ctx, logo, W / 2, SAFE_BOTTOM - logoH - 58, logoW, 28);
       return canvas;
-    });
+    }
   }
 };

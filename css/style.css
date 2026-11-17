@@ -35,6 +35,12 @@ html[lang="th"] p,
 html[lang="th"] h1,
 html[lang="th"] h2 { text-wrap: balance; }
 
+/* Japanese: break between phrases (Chrome; other browsers ignore it) and even
+   out the lines, so a single character like "う。" is never left alone. */
+html[lang="ja"] p,
+html[lang="ja"] h1,
+html[lang="ja"] h2 { word-break: auto-phrase; text-wrap: balance; }
+
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -1129,6 +1135,12 @@ video.motion {
 .site-footer p { margin: 0; }
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { color: var(--ink); }
+
+/* "Found a bug?" link: only in the footer of the About page */
+.report-bug { display: none; margin-top: 10px !important; }
+body[data-page="about"] .report-bug { display: block; }
+.report-bug a { text-decoration: underline; text-underline-offset: 3px; color: var(--muted); }
+.bug-toast { margin-top: 8px !important; color: var(--ink); }
 
 /* ---------- Larger screens ---------- */
 

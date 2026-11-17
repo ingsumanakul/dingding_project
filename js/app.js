@@ -9,6 +9,7 @@ function currentPage() {
 
 function showPage() {
   var name = currentPage();
+  Bug.notePage(name);                            // remembers the page before About
   document.body.setAttribute('data-page', name); // lets the CSS style each page
   var dialog = document.getElementById('detail');
   if (dialog.open) dialog.close();
@@ -67,6 +68,7 @@ function rerenderText() {
 document.addEventListener('DOMContentLoaded', function () {
   I18n.init();
   I18n.apply();
+  Bug.init();
 
   document.querySelectorAll('.lang-toggle button').forEach(function (btn) {
     btn.addEventListener('click', function () {

@@ -215,6 +215,8 @@ var Quiz = {
     var you = I18n.t('quiz.you');
     var cat = I18n.t('cat.' + item.category);
     var HANDLE = '@dingding.thecat by @inginge.design';
+    // where to play, for people who see a shared card (a picture, so it can't be tapped)
+    var PLAY_URL = 'ingsumanakul.github.io/dingding_project/#quiz';
     var LATIN = '{size} "Yusei Magic", sans-serif';   // the handle line, in every language
 
     function loadImage(src) {
@@ -231,7 +233,7 @@ var Quiz = {
       return Promise.all([
         document.fonts.load(font(HEAD, 40), you + name + cat),
         document.fonts.load(font(BODY, 40), desc),
-        document.fonts.load(font(LATIN, 40), HANDLE)
+        document.fonts.load(font(LATIN, 40), HANDLE + PLAY_URL)
       ]).catch(function () {});
     }
     function roundedRect(ctx, x, y, w, h, r) {
@@ -333,14 +335,31 @@ var Quiz = {
       ctx.fillStyle = '#ffffff';
       ctx.fillText(cat, x, y + 41);
     }
-    // the DING DING logo with "@dingding.thecat by @inginge.design" under it;
-    // y = top of the logo
-    function drawSignature(ctx, logo, x, y, logoW, handleSize) {
-      var logoH = logoW * logo.height / logo.width;
-      ctx.drawImage(logo, x - logoW / 2, y, logoW, logoH);
-      ctx.fillStyle = '#8c8c8c';
+    // The signature at the bottom, top to bottom: the DING DING logo, the quiz
+    // link in a black pill (white letters), then the Instagram handles, small.
+    // bottom = where the handles line sits (its baseline).
+    function drawSignature(ctx, logo, x, bottom) {
+      var logoW = 220, logoH = logoW * logo.height / logo.width;
+      var linkSize = 22, padX = 26, pillH = 46, handleSize = 20;
+      var handleY = bottom;
+      var pillY = handleY - handleSize - 20 - pillH;
+      var logoY = pillY - 30 - logoH;
+
+      ctx.drawImage(logo, x - logoW / 2, logoY, logoW, logoH);
+
+      ctx.font = font(LATIN, linkSize);
+      var pillW = ctx.measureText(PLAY_URL).width + padX * 2;
+      ctx.fillStyle = '#1f1f1f';
+      roundedRect(ctx, x - pillW / 2, pillY, pillW, pillH, pillH / 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(PLAY_URL, x, pillY + pillH / 2 + 1);
+      ctx.textBaseline = 'alphabetic';
+
+      ctx.fillStyle = '#9a9a9a';
       ctx.font = font(LATIN, handleSize);
-      ctx.fillText(HANDLE, x, y + logoH + handleSize + 10);
+      ctx.fillText(HANDLE, x, handleY);
     }
 
     function drawStory(art, logo) {
@@ -361,7 +380,7 @@ var Quiz = {
       ctx.fillText(you, W / 2, TOP + 118);
 
       // artwork, with rounded corners
-      var size = 740, x = (W - size) / 2, y = TOP + 170;
+      var size = 640, x = (W - size) / 2, y = TOP + 170;
       ctx.save();
       roundedRect(ctx, x, y, size, size, 28);
       ctx.clip();
@@ -380,9 +399,8 @@ var Quiz = {
         ctx.fillText(line, W / 2, below + (thai ? 278 : 276) + i * (thai ? 54 : 58));
       });
 
-      // logo + handle at the bottom of the safe area
-      var logoW = 260, logoH = logoW * logo.height / logo.width;
-      drawSignature(ctx, logo, W / 2, SAFE_BOTTOM - logoH - 58, logoW, 28);
+      // logo, link and handles at the bottom of the safe area
+      drawSignature(ctx, logo, W / 2, SAFE_BOTTOM);
       return canvas;
     }
   }

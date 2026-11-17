@@ -408,6 +408,14 @@ video.motion {
 }
 .secret-spot .tile { background: #fff; box-shadow: none; }
 
+/* "Saved in this browser" note under the grid: small and grey, like the footer */
+.saved-note {
+  margin: 56px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 /* ---------- Gacha ---------- */
 
 .page-gacha { text-align: center; }

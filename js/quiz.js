@@ -228,8 +228,9 @@ var Quiz = {
     var SAFE_TOP = 250, SAFE_BOTTOM = H - 250;
     var TOP = SAFE_TOP - 50;   // all the content below is placed relative to this
     var thai = lang === 'th';
-    var HEAD = thai ? '600 {size} "Mali", sans-serif' : '{size} "Yusei Magic", sans-serif';
-    var BODY = thai ? '{size} "Mali", sans-serif' : '{size} "Yomogi", sans-serif';
+    var mali = lang !== 'ja';   // English and Thai use Mali, Japanese Yusei Magic + Yomogi
+    var HEAD = mali ? '600 {size} "Mali", sans-serif' : '{size} "Yusei Magic", sans-serif';
+    var BODY = mali ? '{size} "Mali", sans-serif' : '{size} "Yomogi", sans-serif';
     function font(family, size) { return family.replace('{size}', size + 'px'); }
     // Drawn texts never contain the invisible Thai joiners (see I18n.plain).
     // desc keeps them only for wrapping (so kept words stay whole), and every
@@ -423,14 +424,14 @@ var Quiz = {
 
       var below = y + size;   // everything else is placed under the artwork
       // Thai marks above and below need a little more room
-      drawName(ctx, thai ? 76 : 84, W - 120, W / 2, below + 112);
-      drawTag(ctx, W / 2, below + (thai ? 158 : 146));
+      drawName(ctx, mali ? 76 : 84, W - 120, W / 2, below + 112);
+      drawTag(ctx, W / 2, below + (mali ? 158 : 146));
 
       // description
       ctx.fillStyle = '#333333';
-      ctx.font = font(BODY, thai ? 36 : 40);
+      ctx.font = font(BODY, mali ? 36 : 40);
       clampLines(ctx, wrap(ctx, desc, W - 200), W - 200).forEach(function (line, i) {
-        I18n.fillCentered(ctx, line, W / 2, below + (thai ? 278 : 276) + i * (thai ? 54 : 58));
+        I18n.fillCentered(ctx, line, W / 2, below + (mali ? 278 : 276) + i * (mali ? 54 : 58));
       });
 
       // logo, link and handles at the bottom of the safe area

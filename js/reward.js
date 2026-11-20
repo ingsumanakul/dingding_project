@@ -215,9 +215,9 @@ var Reward = {
     var lang = I18n.lang;
     var W = 1080, H = 1920;
     var SAFE_TOP = 250, SAFE_BOTTOM = H - 250;
-    var thai = lang === 'th';
-    var HEAD = thai ? '600 {size} "Mali", sans-serif' : '{size} "Yusei Magic", sans-serif';
-    var BODY = thai ? '{size} "Mali", sans-serif' : '{size} "Yomogi", sans-serif';
+    var mali = lang !== 'ja';   // English and Thai use Mali, Japanese Yusei Magic + Yomogi
+    var HEAD = mali ? '600 {size} "Mali", sans-serif' : '{size} "Yusei Magic", sans-serif';
+    var BODY = mali ? '{size} "Mali", sans-serif' : '{size} "Yomogi", sans-serif';
     var LATIN = '{size} "Yusei Magic", sans-serif';   // footer, always the same
     function font(family, size) { return family.replace('{size}', size + 'px'); }
     var INK = '#1f1f1f', GOLD = '#e6bd3f', MUTED = '#8c8c8c', TILE = '#f2f2f0';
@@ -314,7 +314,7 @@ var Reward = {
         I18n.fillCentered(ctx, name, W / 2, nameY);
       }
       ctx.fillStyle = MUTED;
-      ctx.font = font(BODY, thai ? 32 : 34);
+      ctx.font = font(BODY, mali ? 32 : 34);
       I18n.fillCentered(ctx, date, W / 2, name ? nameY + 62 : nameY - 20);
 
       // all the pieces: 17 x 4 little tiles (68)
@@ -333,8 +333,9 @@ var Reward = {
         ctx.fillRect(cx, cy, cell, cell);
         if (im) {
           if (secret) {
-            // the plain cat is not square: fit it, sitting on the bottom edge
-            var s = Math.min(cell / im.width, cell / im.height);
+            // the plain cat is almost all cat: make it about 68% of the cell
+            // wide (like the other artworks), sitting on the bottom edge
+            var s = Math.min(cell * 0.68 / im.width, cell * 0.8 / im.height);
             ctx.drawImage(im, cx + (cell - im.width * s) / 2, cy + cell - im.height * s, im.width * s, im.height * s);
           } else {
             ctx.drawImage(im, cx, cy, cell, cell);

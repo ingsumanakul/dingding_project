@@ -247,9 +247,6 @@ var THAI_KEEP = [
   'ก็องก็อย', 'แต่นแต๊น', 'ซู้ดดดด', 'บรึ๋ยยย', 'ตัวลับ'
 ];
 
-// Thai uses the Mali font. It is only downloaded the first time Thai is shown.
-var THAI_FONT = 'https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap';
-
 var I18n = {
   lang: 'en',
 
@@ -325,18 +322,9 @@ var I18n = {
   // Wait until the fonts are really ready for drawing on a <canvas>.
   // fonts = [[cssFont, sampleText], ...], e.g. ['600 40px "Mali"', 'ดิงดิง'].
   // A canvas does not wait for web fonts, so without this the first card can
-  // come out in a fallback font. In Thai the Mali stylesheet is added late
-  // (loadThaiFont), so first wait for that stylesheet itself.
+  // come out in a fallback font.
   fontsReady: function (fonts) {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    function sheetLoaded() {
-      var link = document.getElementById('font-th');
-      if (!link || link.sheet) return Promise.resolve();
-      return new Promise(function (ok) {
-        link.addEventListener('load', ok);
-        link.addEventListener('error', ok);
-      });
-    }
     function loadAll() {
       return Promise.all(fonts.map(function (f) {
         return document.fonts.load(f[0], f[1]).catch(function () {});
@@ -347,7 +335,7 @@ var I18n = {
         try { return document.fonts.check(f[0], f[1]); } catch (e) { return true; }
       });
     }
-    var ready = sheetLoaded().then(loadAll).then(function () {
+    var ready = loadAll().then(function () {
       if (allThere()) return;
       // not there yet (slow network): try once more a little later
       return new Promise(function (ok) { setTimeout(ok, 400); }).then(loadAll);
@@ -355,15 +343,6 @@ var I18n = {
     // never wait forever: after 6 s draw with whatever is there
     var timeout = new Promise(function (ok) { setTimeout(ok, 6000); });
     return Promise.race([ready, timeout]);
-  },
-
-  loadThaiFont: function () {
-    if (document.getElementById('font-th')) return;
-    var link = document.createElement('link');
-    link.id = 'font-th';
-    link.rel = 'stylesheet';
-    link.href = THAI_FONT;
-    document.head.appendChild(link);
   },
 
   setLang: function (lang) {
@@ -385,7 +364,6 @@ var I18n = {
   // Fill every element that has data-i18n="key"
   apply: function () {
     document.documentElement.lang = this.lang;
-    if (this.lang === 'th') this.loadThaiFont();
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       el.textContent = I18n.t(el.getAttribute('data-i18n'));
     });

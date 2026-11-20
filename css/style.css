@@ -4,6 +4,7 @@
    ========================================================= */
 
 :root {
+  color-scheme: only light;   /* no dark mode, and no forced darkening (see index.html) */
   --ink: #1f1f1f;          /* Ding Ding's black */
   --text: #333;
   --muted: #8c8c8c;
@@ -13,6 +14,7 @@
   --eye: #f2dc8a;          /* Ding Ding's yellow eyes */
   --blush: #f1c9c4;        /* soft pink from the backgrounds */
   --gold: #e6bd3f;         /* a deeper eye yellow, for the SECRET badge and sparkles */
+  --orange: #d86018;       /* orange from the artwork (016, 024, 040, 042): Super Rare capsule */
 
   --font-head: 'Yusei Magic', system-ui, sans-serif;
   --font-body: 'Yomogi', system-ui, sans-serif;
@@ -22,9 +24,12 @@
   --max: 1080px;
 }
 
-/* Thai: Mali for headings and body (loaded by js/i18n.js only when Thai is shown).
+/* English and Thai: Mali for headings (600) and body (400). Japanese keeps
+   Yusei Magic + Yomogi (Mali has no Japanese letters). Google Fonts splits Mali
+   by alphabet, so the Thai letters are only downloaded when Thai is shown.
    Thai has no spaces between words; the browser breaks lines at word boundaries,
    and "balance" evens out the lines, so no short word is left alone on the last line. */
+html[lang="en"],
 html[lang="th"] {
   --font-head: 'Mali', system-ui, sans-serif;
   --font-body: 'Mali', system-ui, sans-serif;
@@ -108,8 +113,8 @@ button { font: inherit; color: inherit; }
   display: flex;
   align-items: center;
   gap: 2px;
-  font-family: var(--font-head);
-  font-weight: var(--head-weight);
+  font-family: 'Mali', system-ui, sans-serif;   /* EN / TH / JP: Mali in every language */
+  font-weight: 600;
   font-size: 12px;
   color: var(--muted);
 }
@@ -278,6 +283,7 @@ body[data-page="home"] .site-nav { margin-top: 26px; }
   color: var(--ink);
   transform: rotate(-4deg);
 }
+html[lang="en"] .complete-badge,
 html[lang="th"] .complete-badge { font-family: var(--font-head); font-weight: var(--head-weight); }
 
 #open-cert { margin-top: 14px; }
@@ -415,14 +421,18 @@ video.motion {
 }
 .motion-play:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-/* The Secret: the plain cat on white, sitting on the bottom edge (not cropped) */
+/* The Secret: the plain cat on white, sitting on the bottom edge (not cropped).
+   The picture is almost all cat, so it gets padding: the cat is then about
+   68% of the frame wide, like Ding Ding in the other artworks. */
 .tile.is-secret { background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
 .tile.is-secret img,
 .tile.is-secret video,
 .detail.is-secret .detail-image img,
 .detail.is-secret .detail-image video,
 .gacha-reveal[data-rarity="secret"] .reveal-image img,
-.gacha-reveal[data-rarity="secret"] .reveal-image video {
+.gacha-reveal[data-rarity="secret"] .reveal-image video,
+.wall-cell.is-secret img {
+  padding: 20% 16% 0;
   object-fit: contain;
   object-position: center bottom;
   background: #fff;
@@ -504,7 +514,7 @@ video.motion {
 
 /* the capsule colour hints at the tier */
 .capsule[data-rarity="rare"] .capsule-top       { background: var(--blush); }
-.capsule[data-rarity="super-rare"] .capsule-top { background: var(--gold); }
+.capsule[data-rarity="super-rare"] .capsule-top { background: var(--orange); }
 .capsule[data-rarity="secret"] .capsule-top     { background: var(--ink); }
 
 .capsule.is-dropping { animation: capsule-drop 0.9s cubic-bezier(0.3, 0, 0.6, 1); }
@@ -996,7 +1006,6 @@ video.motion {
 .wall-cell:empty { background: none; animation: none; }
 .wall-cell img { width: 100%; height: 100%; object-fit: cover; }
 .wall-cell.is-secret { background: #fff; }
-.wall-cell.is-secret img { object-fit: contain; object-position: center bottom; }
 @keyframes wall-pop {
   from { transform: scale(0); opacity: 0; }
   to   { transform: none; opacity: 1; }

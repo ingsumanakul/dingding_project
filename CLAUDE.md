@@ -49,15 +49,17 @@ ding_ding_project/
 
 ## Fonts (Google Fonts, SIL OFL 1.1)
 
-- **Yusei Magic** for headings, buttons, and labels (English and Japanese).
-- **Yomogi** for body text (English and Japanese).
-- **Mali** for all Thai text, headings (weight 600) and body (400). It is only downloaded when Thai is shown (`js/i18n.js` adds the stylesheet link), and the quiz story card uses it too.
+- **Mali** for all English and Thai text, headings (weight 600) and body (400), on the page and on the quiz card and certificate. It is in the Google Fonts link in `index.html`; Google splits it by alphabet, so the Thai letters are only downloaded when Thai is shown.
+- **Yusei Magic** for headings, buttons, and labels in Japanese, and **Yomogi** for Japanese body text (Mali has no Japanese letters).
+- The language toggle (EN / TH / JP) is Mali in every language, Japanese included.
+- Always Yusei Magic, in every language: the rarity stickers (R / SR / SECRET) and the handle/link line on the quiz card and certificate. COMPLETE! is Yusei Magic in Japanese, Mali in English and Thai.
 - Use images from `logos/` for the main logo and headings when available.
 
 ## Design
 
 - Clean, minimal, cute illustration website. See `design-ref/`.
 - White background, generous whitespace, the artwork is the hero.
+- Light only, no dark mode: `<meta name="color-scheme" content="only light">` in `index.html` and `color-scheme: only light` in `:root`, so Android's "darken websites" doesn't invert the page (it turned the white-background pictures into white boxes on black).
 - Image grid with light grey tiles and thin, even gaps.
 - Small, light navigation text. Limited colours, taken from the artwork.
 - No heavy shadows, gradients, or busy decorations. Gentle motion only (soft fades, small bounces).
@@ -104,7 +106,7 @@ One entry per character:
    - Each spin first picks a tier, then a piece in that tier: Common 65%, Rare 20%, Super Rare 13%, Secret 2% (`ODDS` in `js/gacha.js`). Inside the tier, a DING DING not collected yet is 10× as likely as one already collected (`NEW_WEIGHT`), so repeats still happen, just less often.
    - Secret catch-up (`CATCHUP` in `js/gacha.js`): only when the player has all 67 other pieces, the Secret chance goes from 2% to 10% per spin (the other tiers share the rest in the same proportions). If it still hasn't come after 30 spins in that state, the next spin is the Secret. The count is saved in `dd.secretWait`.
    - Target: a full collection in about 100–150 spins. Simulated with the real `js/gacha.js` (20,000 full collections, with the catch-up): average about 109 spins, half finish within 105, 90% within 133. The Secret alone: average 45, half within 35, 90% within 102. Once only the Secret is missing it takes at most 31 more spins. Re-check this if the odds or the number of pieces change.
-   - Reveal effects: Common is plain; Rare has sparkles; Super Rare has sparkles, a gold glow, and the capsule shakes hard before it opens; the Secret shakes hard too, then the screen goes dark and two yellow eyes blink before the reveal, with a black "SECRET!" / 「シークレット！」 / "ตัวลับ!" badge. The capsule colour hints at the tier.
+   - Reveal effects: Common is plain; Rare has sparkles; Super Rare has sparkles, a gold glow, and the capsule shakes hard before it opens; the Secret shakes hard too, then the screen goes dark and two yellow eyes blink before the reveal, with a black "SECRET!" / 「シークレット！」 / "ตัวลับ!" badge. The capsule colour hints at the tier: Common eye yellow, Rare pink, Super Rare orange (`--orange`, from the artwork), Secret black.
    - Unlocked characters appear in colour in the Collection; locked ones show as a dark silhouette.
 4. **Reward for collecting everything** (`js/reward.js`): when the last of the 68 (including the Secret) is unlocked, after its normal reveal:
    - A full-screen celebration: confetti, the winner animation (`logos/winner.gif` → `video/winner.*`, still `thumbs/winner-*.webp` from `logos/winner.png`) in a card in the middle, all 68 DING DINGs popping in around it, and "COMPLETE!" / 「コンプリート！」 / "ครบแล้ว!". The winner art is a reward only, never a collectible, so it is not in `dingding.json`.

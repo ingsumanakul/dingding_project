@@ -15,6 +15,11 @@ var ODDS = [
 // as one already collected. Repeats still happen, just less often.
 var NEW_WEIGHT = 10;
 
+// Early Secret: until the player has EARLY.until pieces, the Secret is only
+// EARLY.chance % per spin (a lucky few still find it early), then ODDS (2%).
+// So for most players the Secret is a reward for playing longer.
+var EARLY = { chance: 0.3, until: 30 };
+
 // Catch-up for the Secret: once the player has all the other pieces, the
 // Secret chance goes up from ODDS (2%) to CATCHUP.chance (10%) per spin, and
 // if it still hasn't come after CATCHUP.guarantee spins, the next spin is
@@ -57,19 +62,27 @@ var Gacha = {
     return missing.length === 1 && missing[0].rarity === 'secret';
   },
 
+  // ODDS with the Secret at `chance` %, the other tiers sharing the rest
+  // in the same proportions.
+  oddsWithSecret: function (chance) {
+    var others = ODDS.filter(function (o) { return o.rarity !== 'secret'; });
+    var othersTotal = others.reduce(function (sum, o) { return sum + o.chance; }, 0);
+    return others.map(function (o) {
+      return { rarity: o.rarity, chance: o.chance * (100 - chance) / othersTotal };
+    }).concat({ rarity: 'secret', chance: chance });
+  },
+
   // Step 1: the tier, by the chances in ODDS.
-  // Only the Secret missing: the Secret gets CATCHUP.chance (the other tiers
-  // share the rest, in the same proportions), and after CATCHUP.guarantee
-  // spins without it, the next spin is the Secret.
+  // Fewer than EARLY.until pieces: the Secret is only EARLY.chance.
+  // Only the Secret missing: the Secret gets CATCHUP.chance, and after
+  // CATCHUP.guarantee spins without it, the next spin is the Secret.
   pickRarity: function () {
     var odds = ODDS;
     if (this.onlySecretLeft()) {
       if (Store.get(KEYS.secretWait, 0) >= CATCHUP.guarantee) return 'secret';
-      var others = ODDS.filter(function (o) { return o.rarity !== 'secret'; });
-      var othersTotal = others.reduce(function (sum, o) { return sum + o.chance; }, 0);
-      odds = others.map(function (o) {
-        return { rarity: o.rarity, chance: o.chance * (100 - CATCHUP.chance) / othersTotal };
-      }).concat({ rarity: 'secret', chance: CATCHUP.chance });
+      odds = this.oddsWithSecret(CATCHUP.chance);
+    } else if (this.unlocked().length < EARLY.until) {
+      odds = this.oddsWithSecret(EARLY.chance);
     }
     var roll = Math.random() * 100;
     for (var i = 0; i < odds.length; i++) {

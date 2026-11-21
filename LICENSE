@@ -1,0 +1,51 @@
+DING DING THE CAT — License
+===========================
+
+This project has two parts with two different licenses.
+
+
+1. Artwork and characters: All rights reserved
+-----------------------------------------------
+
+Copyright (c) 2026 INGINGE DESIGN (Ing). All rights reserved.
+
+DING DING THE CAT, the character, and all of its artwork are original works
+by Ing / INGINGE DESIGN. This includes:
+
+  - every image and animation in thumbs/ and video/
+  - the logos, icons and favicons (favicon.ico, favicon-32.png, apple-touch-icon.png)
+  - the character names, descriptions and quiz texts in data/
+
+You may view them on this website and share links to it.
+You may NOT copy, download for reuse, modify, redistribute, sell, print,
+use in other projects or products, use to train AI models, or use them in any
+other way without written permission from INGINGE DESIGN.
+
+For permission, contact @inginge.design on Instagram.
+
+
+2. Source code: MIT License
+---------------------------
+
+The source code (index.html, css/, js/, tools/) is licensed under the
+MIT License. This covers the code only, not the artwork or characters above.
+
+Copyright (c) 2026 INGINGE DESIGN (Ing)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
